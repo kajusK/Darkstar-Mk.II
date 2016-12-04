@@ -1,4 +1,4 @@
-update=Ne 4. prosinec 2016, 15:47:21 CET
+update=Ne 4. prosinec 2016, 15:52:03 CET
 version=1
 last_client=kicad
 [pcbnew]
@@ -110,3 +110,13 @@ LibName78=/home/kajus/Prace/dps/kicad/kicad-library/library/valves
 LibName79=/home/kajus/Prace/dps/kicad/kicad-library/library/video
 LibName80=/home/kajus/Prace/dps/kicad/kicad-library/library/xilinx
 LibName81=/home/kajus/Prace/dps/kicad/kicad-library/library/zetex
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
