@@ -1,0 +1,9 @@
+*.bak
+*-bak
+*.fcstd1
+*.step
+*.cod
+*.hex
+*.lst
+*.o
+avr/obj/
