@@ -1,5 +1,5 @@
 /*
- * ADC module
+ * PWM generators
  *
  * For license, see LICENSE.txt
  *
