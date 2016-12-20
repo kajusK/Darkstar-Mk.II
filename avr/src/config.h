@@ -10,8 +10,16 @@
 #define FW_VERSION "0.1"
 #define HW_VERSION "0.1"
 
+/*
+ *  Default values
+ */
 // serial baudrate
 #define BAUD	9600
+
+//led current to set when using additional pwm dimming, 0-255, should be close
+//within reasonable led driver efficiency region
+#define DEFAULT_DIM_CURRENT	30
+
 
 /*
  * IO definitions

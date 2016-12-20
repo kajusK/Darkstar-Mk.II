@@ -9,7 +9,8 @@
 #ifndef __LEDS_H_
 #define __LEDS_H_
 
-#include "hal/pwm.h"
+#include <avr/io.h>
+#include <inttypes.h>
 #include "config.h"
 
 /*
@@ -28,19 +29,27 @@ extern void leds_enable(void);
 extern void leds_disable(void);
 
 /*
- * Set led current, 0-255
+ * Setup current used when dimming enabled
  */
-#if (LED1_PWM_NUM % 2 == 0)
-	#define led1_set(duty) { pwm_t0_setB(duty); }
-	#define led1_off() { pwm_t0_setB(0); }
-	#define led2_set(duty) { pwm_t0_setA(duty); }
-	#define led2_off() { pwm_t0_setA(0); }
-#else
-	#define led1_set(duty) { pwm_t0_setA(duty); }
-	#define led1_off() { pwm_t0_setA(0); }
-	#define led2_set(duty) { pwm_t0_setB(duty); }
-	#define led2_off() { pwm_t0_setB(0); }
-#endif
+extern void leds_dim_level(uint8_t level);
+
+/*
+ * Set led 1 output level
+ *
+ * Current in 0-255
+ * If dimming_enable, current is set to dim level (leds_dim_level()) and
+ * 0-255 is used for additional pwm dimming
+ */
+extern void led1_set(uint8_t brightness, uint8_t dimming_enable);
+
+/*
+ * Set led 2 output level
+ *
+ * Current in 0-255
+ * If dimming_enable, current is set to dim level (leds_dim_level()) and
+ * 0-255 is used for additional pwm dimming
+ */
+extern void led2_set(uint8_t brightness, uint8_t dimming_enable);
 
 /*
  * Small leds control
