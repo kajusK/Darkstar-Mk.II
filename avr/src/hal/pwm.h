@@ -9,9 +9,10 @@
 #ifndef __PWM_H_
 #define __PWM_H_
 
+#include <avr/io.h>
 #include <inttypes.h>
 
-//set pwm duty on timer0, output A
+//set pwm duty on timer0, even output is B, odd is A
 #define pwm_t0_setA(duty) { OCR0A = duty; }
 #define pwm_t0_setB(duty) { OCR0B = duty; }
 
