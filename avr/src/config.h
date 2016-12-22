@@ -1,3 +1,6 @@
+#ifndef __CONFIG_H_
+#define __CONFIG_H_
+
 /* definitions to keep the things sane, don't modify */
 #define PORT_(port)	PORT ## port
 #define DDR_(port)	DDR  ## port
@@ -58,3 +61,13 @@
 
 /* Light measurement */
 #define PHOTOTRANS_ADC	9
+
+/* Buttons */
+#define BUTTON1_PORT	B
+#define BUTTON1_PIN	0
+
+#define BUTTON2_PORT	B
+#define BUTTON2_PIN	1
+
+
+#endif
