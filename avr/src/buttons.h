@@ -17,7 +17,7 @@ enum button {
 };
 
 enum bt_state {
-	BUTTON_PRESSED,		//when just_pressed is true, pressed is true too
+	BUTTON_PRESSED,
 	BUTTON_JUST_PRESSED,
 	BUTTON_RELEASED,
 	BUTTON_JUST_RELEASED,
