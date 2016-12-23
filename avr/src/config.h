@@ -1,6 +1,8 @@
 #ifndef __CONFIG_H_
 #define __CONFIG_H_
 
+#include <avr/wdt.h>
+
 /* definitions to keep the things sane, don't modify */
 #define PORT_(port)	PORT ## port
 #define DDR_(port)	DDR  ## port
@@ -18,6 +20,8 @@
  */
 // serial baudrate
 #define BAUD	9600
+
+#define WDT_TIMEOUT WDTO_30MS
 
 //led current to set when using additional pwm dimming, 0-255, should be close
 //within reasonable led driver efficiency region
