@@ -75,7 +75,7 @@ void leds_init(void)
 	DDR(DRIVER_ENABLE_PORT) |= _BV(DRIVER_ENABLE_PIN);
 
 	//additional led pwm dimming
-	pwm_init_t1(PWM_PRESC_1, PWM_8_BITS, 0xff, 0xff);
+	pwm_init_t1(PWM_PRESC_8, PWM_8_BITS, 0xff, 0xff);
 	pwm_t1_setA(0xff);
 	pwm_t1_setB(0xff);
 	PORT(LED1_DIM_PORT) &= ~_BV(LED1_DIM_PIN);
