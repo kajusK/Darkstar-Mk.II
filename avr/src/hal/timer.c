@@ -20,7 +20,7 @@ ISR(TIMER2_OVF_vect)
 	time++;
 }
 
-void init_time(void)
+void time_init(void)
 {
 	TCNT2 = 0;
 	time = 0;
@@ -55,7 +55,7 @@ uint16_t millis(void)
  *
  * t2 timestamp has to be taken after t1
  */
-uint16_t diff_time(uint16_t t1, uint16_t t2)
+uint16_t time_diff(uint16_t t1, uint16_t t2)
 {
 	if (t1 < t2)
 		return t2 - t1;

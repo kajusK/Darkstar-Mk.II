@@ -6,12 +6,12 @@
  * Jakub Kaderka 2016
  */
 
-#ifndef __ADC_H_
-#define __ADC_H_
+#ifndef __TIMER_H_
+#define __TIMER_H_
 
 #include <inttypes.h>
 
-void init_time(void);
+void time_init(void);
 
 /*
  * Return time in milliseconds since the init_time was called
@@ -26,6 +26,6 @@ uint16_t millis(void);
  *
  * t2 timestamp has to be taken after t1
  */
-extern uint16_t diff_time(uint16_t t1, uint16_t t2);
+extern uint16_t time_diff(uint16_t t1, uint16_t t2);
 
 #endif
