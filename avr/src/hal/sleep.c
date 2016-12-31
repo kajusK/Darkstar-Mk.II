@@ -12,6 +12,7 @@
 #include <avr/interrupt.h>
 
 #include "hal/adc.h"
+#include "hal/leds.h"
 #include "config.h"
 
 /*
@@ -20,6 +21,13 @@
  */
 void power_off(void)
 {
+	uint8_t leds_reenable = 0;
+
+	if (leds_enabled()) {
+		leds_reenable = 1;
+		leds_disable();
+	}
+
 	adc_disable();
 
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
@@ -36,4 +44,7 @@ void power_off(void)
 
 	wdt_enable(WDT_TIMEOUT);
 	adc_enable();
+
+	if (leds_reenable)
+		leds_enable();
 }
