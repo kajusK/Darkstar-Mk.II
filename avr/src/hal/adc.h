@@ -59,7 +59,7 @@ extern uint8_t adc_read8(uint8_t port, enum ad_ref ref);
 extern int8_t adc_core_temp(void);
 
 /*
- * Get supply voltage in hundredths of volt
+ * Get supply voltage in mV
  */
 extern uint16_t adc_read_vcc(void);
 

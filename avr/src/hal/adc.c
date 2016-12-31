@@ -122,9 +122,9 @@ int8_t adc_core_temp(void)
 }
 
 /*
- * Get supply voltage in hundredths of volt
+ * Get supply voltage in mV
  */
 uint16_t adc_read_vcc(void)
 {
-	return 110*(1024/adc_read(AD_MUX_INT_REF, AD_REF_VCC));
+	return 1100*(1024/adc_read(AD_MUX_INT_REF, AD_REF_VCC));
 }
