@@ -29,6 +29,11 @@ extern void leds_enable(void);
 extern void leds_disable(void);
 
 /*
+ * Get leds enable status
+ */
+#define leds_enabled() (!(PORT(DRIVER_ENABLE_PORT) & _BV(DRIVER_ENABLE_PIN)))
+
+/*
  * Setup current used when dimming enabled
  */
 extern void leds_dim_level(uint8_t level);
