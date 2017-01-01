@@ -1,3 +1,11 @@
+/*
+ * Main API configuration
+ *
+ * For license, see LICENSE.txt
+ *
+ * Jakub Kaderka 2016
+ */
+
 #ifndef __CONFIG_H_
 #define __CONFIG_H_
 
@@ -23,10 +31,30 @@
 
 #define WDT_TIMEOUT WDTO_30MS
 
-//led current to set when using additional pwm dimming, 0-255, should be close
+//led current to set when using additional pwm dimming, 0-255, should be
 //within reasonable led driver efficiency region
-#define DEFAULT_DIM_CURRENT	30
+#define DEFAULT_DIM_CURRENT	32
 
+/*
+ * Hard limits
+ */
+//maximum pwm value settable, e.g. when output must be limited to match
+//maximum led current (0-255)
+#define MAX_PWM		255
+
+//output will be limited to minimal level after exceeding this temperature
+#define TEMP_MAX	70
+//main light will be shut down after exceeding this temperature
+#define TEMP_SHUTDOWN	90
+//maximum PWM duty when over TEMP_MAX
+#define PWM_OVERHEAT_MAX 15
+
+//voltage in mV to limit max output
+#define VOLTAGE_MIN	2900
+//main light will be shut down after reaching this limit
+#define VOLTAGE_SHUTDOWN 2600
+//maximum PWM duty when under VOLTAGE_MIN
+#define PWM_UNDERV	15
 
 /*
  * IO definitions
@@ -39,6 +67,11 @@
  *
  * Due to internal limitations, one LEDx_PWM_NUM must be even, second must be
  * odd
+ *
+ * LED1 - SPOT
+ * LED2 - FLOOD
+ * LED_SM1 - RED
+ * LED_SM2 - WHITE
  */
 #define LED1_PWM_NUM	2
 #define LED2_PWM_NUM	3
@@ -72,6 +105,5 @@
 
 #define BUTTON2_PORT	B
 #define BUTTON2_PIN	1
-
 
 #endif
