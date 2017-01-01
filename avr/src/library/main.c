@@ -27,6 +27,9 @@
 #include "buttons.h"
 #include "light.h"
 
+extern void init(void);
+extern void loop(void);
+
 ISR(BADISR_vect)
 {
 
@@ -36,7 +39,8 @@ void main_loop(void)
 {
 	buttons_read();
 
-	//call_user_script
+	//call user script
+	loop();
 
 	light_update();
 	wdt_reset();
@@ -69,6 +73,9 @@ int main(void)
 	adc_init();
 	leds_init();
 	adc_pin_set(PHOTOTRANS_ADC);
+
+	//initialize user mode
+	init();
 
 	while(1) {
 		main_loop();

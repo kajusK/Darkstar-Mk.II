@@ -3,6 +3,9 @@
 #
 # Jakub Kaderka 2017
 ###########################################
+
+MODE=simple
+
 #used MCU
 MCU=attiny841
 #used frequency
@@ -13,7 +16,8 @@ PROGRAM=darkstar
 
 #dirs
 OBJDIR=obj
-SRCDIRS=src
+SRCDIRS=src/library
+MODESDIR=src/modes
 
 #compiler and linker config
 CC=avr-gcc
@@ -27,10 +31,10 @@ UPLOADER_FLAGS=-c usbtiny -p $(MCU) -B 1
 #resulting bin
 TARGET=$(PROGRAM).hex
 
-C_SRC = $(shell find $(SRCDIRS) -name '*.c')
+C_SRC = $(shell find $(SRCDIRS) $(MODESDIR)/$(MODE).c -name '*.c')
 OBJS = $(addprefix $(OBJDIR)/, $(C_SRC:.c=.o) $(AS_SRC:.s=.o))
 DEPS = $(addprefix $(OBJDIR)/, $(C_SRC:.c=.d))
-DIRS=$(addprefix $(OBJDIR)/, $(shell find $(SRCDIRS) -type d))
+DIRS=$(addprefix $(OBJDIR)/, $(shell find $(SRCDIRS) $(MODESDIR) -type d))
 
 .PHONY : clean all hierarchy program
 
