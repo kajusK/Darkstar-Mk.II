@@ -31,6 +31,9 @@
 
 #define WDT_TIMEOUT WDTO_30MS
 
+//system loop is run every tick ms
+#define SYS_TICK 10
+
 //led current to set when using additional pwm dimming, 0-255, should be
 //within reasonable led driver efficiency region
 #define DEFAULT_DIM_CURRENT	32
