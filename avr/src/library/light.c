@@ -197,6 +197,16 @@ void light_update(void)
 }
 
 /*
+ * Turn off all LEDs
+ */
+void light_off(void)
+{
+	int i;
+	for (i = 0; i < LEDS_COUNT; i++)
+		leds_setup[i].level = 0;
+}
+
+/*
  * Set light output to given level if possible, for e.g. small leds, only
  * off and on states are possible (false/true)
  *

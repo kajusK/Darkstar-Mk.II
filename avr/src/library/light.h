@@ -53,6 +53,11 @@ extern struct s_limits light_limits(void);
 extern void light_update(void);
 
 /*
+ * Turn off all LEDs
+ */
+extern void light_off(void);
+
+/*
  * Set light output to given level if possible, for e.g. small leds, only
  * off and on states are possible (false/true)
  *
