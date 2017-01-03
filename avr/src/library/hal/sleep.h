@@ -13,6 +13,6 @@
  * Power off the device, only INT0, UART, TWI or Interrupt on pin change
  * can wake it up again
  */
-void power_off(void)
+extern void mcu_power_off(void);
 
 #endif
