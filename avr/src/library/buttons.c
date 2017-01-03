@@ -12,8 +12,8 @@
 #include "config.h"
 #include "buttons.h"
 
-#define BT1_ON (PIN(BUTTON1_PORT) & BUTTON1_PIN)
-#define BT2_ON (PIN(BUTTON2_PORT) & BUTTON2_PIN)
+#define BT1_ON (!(PIN(BUTTON1_PORT) & _BV(BUTTON1_PIN)))
+#define BT2_ON (!(PIN(BUTTON2_PORT) & _BV(BUTTON2_PIN)))
 
 /*
  * Status keeps last 3 states of button
