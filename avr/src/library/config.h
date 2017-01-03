@@ -3,7 +3,7 @@
  *
  * For license, see LICENSE.txt
  *
- * Jakub Kaderka 2016
+ * Jakub Kaderka 2017
  */
 
 #ifndef __CONFIG_H_
@@ -37,6 +37,11 @@
 //led current to set when using additional pwm dimming, 0-255, should be
 //within reasonable led driver efficiency region
 #define DEFAULT_DIM_CURRENT	32
+
+//uncomment to calculate voltage decreased by forward voltage on diode
+#define SUPPLY_DIODE
+//forward voltage of diode on supply rail
+#define DIODE_FORWARD_VOLTAGE 350
 
 /*
  * Hard limits

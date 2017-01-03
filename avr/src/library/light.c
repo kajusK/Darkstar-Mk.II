@@ -11,6 +11,7 @@
 #include "config.h"
 #include "hal/adc.h"
 #include "hal/leds.h"
+#include "system.h"
 #include "light.h"
 
 //used during linear calculation, should be equal to max supply voltage (in mV)
@@ -38,8 +39,10 @@ static struct s_blink blink;
 /*
  * Calculate level for constant mode
  */
-static inline uint8_t mode_constant(uint8_t level, uint16_t voltage)
+static inline uint8_t mode_constant(uint8_t level)
 {
+	uint16_t voltage = system_voltage();
+
 	//*10 and /10 used to avoid integer overflow
 	uint16_t res = ((((uint16_t) VOLTAGE_MAX*10)/voltage)*level)/10;
 	return res > 255 ? 255 : res;
@@ -101,7 +104,7 @@ struct s_limits light_limits(void)
 {
 	struct s_limits limits;
 	uint8_t temp = adc_core_temp();
-	uint16_t voltage = adc_read_vcc();
+	uint16_t voltage = system_voltage();
 
 	if (temp >= TEMP_MAX) {
 		limits.overheating = 1;
@@ -127,7 +130,6 @@ void light_update(void)
 	uint8_t i;
 	uint8_t pwm_max = MAX_PWM;
 	struct s_limits limits = light_limits();
-	uint16_t voltage = adc_read_vcc();
 
 	/*
 	 * Apply limits
@@ -158,8 +160,8 @@ void light_update(void)
 			led_update(i, leds_setup[i].level, pwm_max);
 			break;
 		case MODE_CONSTANT:
-			led_update(i, mode_constant(leds_setup[i].level,
-						voltage), pwm_max);
+			led_update(i, mode_constant(leds_setup[i].level),
+				   pwm_max);
 			break;
 		case MODE_AUTO:
 			led_update(i, mode_auto(leds_setup[i].level), pwm_max);
