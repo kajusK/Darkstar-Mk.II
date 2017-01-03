@@ -110,8 +110,11 @@
 /* Buttons */
 #define BUTTON1_PORT	B
 #define BUTTON1_PIN	0
+//PCINTx for corresponding pin
+#define BUTTON1_INT	8
 
 #define BUTTON2_PORT	B
 #define BUTTON2_PIN	1
+#define BUTTON2_INT	9
 
 #endif
