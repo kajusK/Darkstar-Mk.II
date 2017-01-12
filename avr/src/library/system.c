@@ -9,12 +9,22 @@
 #include <inttypes.h>
 #include <avr/wdt.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 #include "hal/sleep.h"
 #include "hal/leds.h"
 #include "hal/int.h"
 
 #include "buttons.h"
+
+//empty interrupts, used to wake up only
+ISR(PCINT0_vect)
+{
+}
+
+ISR(PCINT1_vect)
+{
+}
 
 /*
  * Temporarily turn off all leds and send device to sleep mode
@@ -26,10 +36,16 @@
  * Leds will be reenabled in next main loop cycle automatically
  *
  * Shortest detectable button press is 11 ms
+ *
+ * Button can be BUTTON1, BUTTON2 or BUTTON1|BUTTON2 for both
  */
-void power_off(enum button btn)
+void power_off(uint8_t btn)
 {
-	uint8_t pcmsk_num = btn == BUTTON1 ? BUTTON1_INT : BUTTON2_INT;
+	//if control mode was written by asshole, give him a way to wake up
+	//when no button was set
+	if (!(btn & (BUTTON1 | BUTTON2)))
+		btn = BUTTON1;
+
 	//will be reenabled during next light_update call if needed
 	leds_disable();
 	led_sm1_off();
@@ -37,17 +53,30 @@ void power_off(enum button btn)
 
 	while (1) {
 		wdt_reset();
-		int_pcmsk_enable(pcmsk_num);
-		mcu_power_off();
-		int_pcmsk_disable(pcmsk_num);
 
-		_delay_ms(1);//time for bit of bouncing
+		if (btn & BUTTON1)
+			int_pcmsk_enable(BUTTON1_INT);
+		if (btn & BUTTON2)
+			int_pcmsk_enable(BUTTON2_INT);
+
+		//go to sleep
+		mcu_power_off();
+
+		if (btn & BUTTON1)
+			int_pcmsk_disable(BUTTON1_INT);
+		if (btn & BUTTON2)
+			int_pcmsk_disable(BUTTON2_INT);
+
+		//time for bit of bouncing
+		_delay_ms(1);
 		buttons_read();
 		_delay_ms(10);
 		buttons_read();
 
 		//if still pressed, wake up, if not, go to sleep again
-		if (button_state(btn) == BUTTON_PRESSED)
+		if (btn & BUTTON1 && button_state(BUTTON1) == BUTTON_PRESSED)
+			break;
+		if (btn & BUTTON2 && button_state(BUTTON2) == BUTTON_PRESSED)
 			break;
 	}
 }

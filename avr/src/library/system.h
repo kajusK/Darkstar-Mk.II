@@ -9,6 +9,8 @@
 #ifndef __SYSTEM_H_
 #define __SYSTEM_H_
 
+#include <inttypes.h>
+
 #include "hal/adc.h"
 #include "config.h"
 #include "buttons.h"
@@ -38,8 +40,9 @@ extern void system_loop(void);
  * Leds will be reenabled in next main loop cycle automatically
  *
  * Shortest detectable button press is 11 ms
+ *
+ * Button can be BUTTON1, BUTTON2 or BUTTON1|BUTTON2 for both
  */
-extern void power_off(enum button btn);
-
+extern void power_off(uint8_t btn);
 
 #endif

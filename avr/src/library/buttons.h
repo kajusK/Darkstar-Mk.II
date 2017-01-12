@@ -12,7 +12,7 @@
 #include <inttypes.h>
 
 enum button {
-	BUTTON1,
+	BUTTON1 = 1,
 	BUTTON2,
 };
 
