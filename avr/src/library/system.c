@@ -51,4 +51,3 @@ void power_off(enum button btn)
 			break;
 	}
 }
-
