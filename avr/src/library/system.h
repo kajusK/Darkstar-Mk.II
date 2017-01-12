@@ -22,6 +22,13 @@
 #endif
 
 /*
+ * Run system tasks, equivalent to returning from mode loop() with exception
+ * after the tasks are finished program continues from place system_loop() was
+ * called from
+ */
+extern void system_loop(void);
+
+/*
  * Temporarily turn off all leds and send device to sleep mode
  *
  * When state of button is changed (pressed or released), it wakes from sleep
@@ -33,5 +40,6 @@
  * Shortest detectable button press is 11 ms
  */
 extern void power_off(enum button btn);
+
 
 #endif

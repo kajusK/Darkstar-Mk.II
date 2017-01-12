@@ -9,6 +9,7 @@
 // The BOD mode of operation is selected using BODACT and BODPD fuse bits. - disable BOD in sleep
 // TODO handle various resets, log the errors
 // handle processing eeprom - configuration, most used modes,...
+// first board revision - need to use reset pin, with reset disabled, won't be able to ISP
  */
 
 #include <stdio.h>
@@ -30,11 +31,18 @@
 extern void init(void);
 extern void loop(void);
 
+static uint16_t latest_run;
+
 ISR(BADISR_vect)
 {
-
+	//if bad interrupt was called, loop until wdt triggers reset
+	while (1)
+		;
 }
 
+/*
+ * Run system tasks and user mode loop()
+ */
 void main_loop(void)
 {
 	buttons_read();
@@ -46,10 +54,24 @@ void main_loop(void)
 	wdt_reset();
 }
 
+/*
+ * Run system tasks, equivalent to returning from mode loop() with exception
+ * after the tasks are finished program continues from place system_loop() was
+ * called from
+ */
+void system_loop(void)
+{
+	while (time_diff(latest_run, millis()) < SYS_TICK)
+		;
+	buttons_read();
+	light_update();
+	wdt_reset();
+	latest_run = millis();
+}
+
 
 int main(void)
 {
-	uint16_t latest_run;
 
 	wdt_reset();
 	wdt_enable(WDT_TIMEOUT);
