@@ -74,7 +74,7 @@ ISR(USART_UDRE_vect)
 
 int uart_putc(char c, FILE __attribute__((__unused__)) *stream)
 {
-#ifdef UART_BINARY_SAFE
+#ifndef UART_BINARY_SAFE
 	if (c == '\n')
 		uart_putc('\r', stream);
 #endif
