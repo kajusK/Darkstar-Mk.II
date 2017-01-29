@@ -90,9 +90,9 @@
 #define LED2_PWM_PIN	4
 
 #define LED1_DIM_PORT	A
-#define LED1_DIM_PIN	5
+#define LED1_DIM_PIN	6
 #define LED2_DIM_PORT	A
-#define LED2_DIM_PIN	6
+#define LED2_DIM_PIN	5
 
 /* LED driver power transistor */
 #define DRIVER_ENABLE_PORT	B
