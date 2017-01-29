@@ -59,9 +59,9 @@ extern void led2_set(uint8_t brightness, uint8_t dimming_enable);
 /*
  * Small leds control
  */
-#define led_sm1_on() { PORT(LED_SM1_PORT) |= _BV(LED_SM1_PIN); }
-#define led_sm1_off() { PORT(LED_SM1_PORT) &= ~_BV(LED_SM1_PIN); }
-#define led_sm2_on() { PORT(LED_SM2_PORT) |= _BV(LED_SM2_PIN); }
-#define led_sm2_off() { PORT(LED_SM2_PORT) &= ~_BV(LED_SM2_PIN); }
+#define led_sm1_on() { PORT(LED_SM1_PORT) &= ~_BV(LED_SM1_PIN); }
+#define led_sm1_off() { PORT(LED_SM1_PORT) |= _BV(LED_SM1_PIN); }
+#define led_sm2_on() { PORT(LED_SM2_PORT) &= ~_BV(LED_SM2_PIN); }
+#define led_sm2_off() { PORT(LED_SM2_PORT) |= _BV(LED_SM2_PIN); }
 
 #endif

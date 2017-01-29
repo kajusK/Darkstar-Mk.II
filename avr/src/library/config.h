@@ -95,14 +95,14 @@
 #define LED2_DIM_PIN	6
 
 /* LED driver power transistor */
-#define DRIVER_ENABLE_PORT	A
-#define DRIVER_ENABLE_PIN	6
+#define DRIVER_ENABLE_PORT	B
+#define DRIVER_ENABLE_PIN	2
 
 /* Small low-power leds */
 #define LED_SM1_PORT	A
 #define LED_SM1_PIN	0
-#define LED_SM2_PORT	B
-#define LED_SM2_PIN	2
+#define LED_SM2_PORT	A
+#define LED_SM2_PIN	7
 
 /* Light measurement */
 #define PHOTOTRANS_ADC	9
