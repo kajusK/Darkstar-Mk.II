@@ -167,13 +167,14 @@ void light_update(void)
 			led_update(i, mode_auto(leds_setup[i].level), pwm_max);
 			break;
 		case MODE_BLINK:
+			if (blink.count == 0) {
+				leds_setup[i].mode = blink.prev_mode;
+				break;
+			}
 			if (blink.timer == 0)
 				led_update(i, leds_setup[i].level, pwm_max);
 			else if (blink.timer == blink.on_time)
 				led_update(i, 0, pwm_max);
-
-			if (blink.count == 0)
-				leds_setup[i].mode = blink.prev_mode;
 			break;
 		case MODE_OFF:
 			led_update(i, 0, pwm_max);
@@ -296,7 +297,7 @@ void light_blink(enum e_led led, uint8_t on_time, uint8_t period, uint8_t times)
 
 	if (leds_setup[led].level == 0) {
 		leds_setup[led].level = 128;
-		leds_setup[led].mode = MODE_OFF;
+		blink.prev_mode = MODE_OFF;
 	}
 }
 
