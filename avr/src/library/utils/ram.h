@@ -12,6 +12,6 @@
 /*
  * Return amount of currently free memory bytes
  */
-int ram_free(void)
+extern int ram_free(void);
 
 #endif
