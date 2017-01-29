@@ -223,7 +223,7 @@ void light_set(enum e_led led, uint8_t level, enum light_mode mode)
 	if (led >= LEDS_COUNT)
 		return;
 
-	leds_setup[led].level = (new_level = 0 && level != 0) ? 1 : new_level;
+	leds_setup[led].level = (new_level == 0 && level != 0) ? 1 : new_level;
 	leds_setup[led].mode = (mode == MODE_BLINK) ? MODE_NORMAL : mode;
 }
 
