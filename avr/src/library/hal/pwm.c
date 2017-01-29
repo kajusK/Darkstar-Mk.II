@@ -28,10 +28,10 @@ static void pwm_set_pin(uint8_t pin, enum e_timer timer)
 
 	//connect pin to compare output
 	if (pin <= 3) {
-		TOCPMSA0 &= ~0x03;
+		TOCPMSA0 &= ~(0x03 << pin*2);
 		TOCPMSA0 |= (timer & 0x03) << pin*2;
 	} else {
-		TOCPMSA1 &= ~0x03;
+		TOCPMSA1 &= ~(0x03 << (pin-3)*2);
 		TOCPMSA1 |= (timer & 0x03) << (pin-3)*2;
 	}
 
@@ -62,14 +62,14 @@ void pwm_init_t0(enum e_presc presc, uint8_t out1, uint8_t out2)
 		if (out1 % 2)
 			TCCR0A |= 2 << COM0A0;
 		else
-			TCCR0B |= 2 << COM0B0;
+			TCCR0A |= 2 << COM0B0;
 		pwm_set_pin(out1, PWM_TIMER_0);
 	}
 	if (out2 != 0xff) {
 		if (out2 % 2)
 			TCCR0A |= 2 << COM0A0;
 		else
-			TCCR0B |= 2 << COM0B0;
+			TCCR0A |= 2 << COM0B0;
 		pwm_set_pin(out2, PWM_TIMER_0);
 	}
 }
@@ -97,14 +97,14 @@ void pwm_init_t1(enum e_presc presc, enum e_pwm_bits bits, uint8_t out1, uint8_t
 		if (out1 % 2)
 			TCCR1A |= 2 << COM1A0;
 		else
-			TCCR1B |= 2 << COM1B0;
+			TCCR1A |= 2 << COM1B0;
 		pwm_set_pin(out1, PWM_TIMER_1);
 	}
 	if (out2 != 0xff) {
 		if (out2 % 2)
 			TCCR1A |= 2 << COM1A0;
 		else
-			TCCR1B |= 2 << COM1B0;
+			TCCR1A |= 2 << COM1B0;
 		pwm_set_pin(out2, PWM_TIMER_1);
 	}
 }
