@@ -32,7 +32,7 @@ static uint8_t dim_level = DEFAULT_DIM_CURRENT;
 
 #define led1_dim_enable() { TIMSK1 |= _BV(OCIE1A); }
 #define led1_dim_disable() { TIMSK1 &= ~_BV(OCIE1A); \
-			     DDR(LED2_DIM_PORT) &= ~_BV(LED2_DIM_PIN); }
+			     DDR(LED1_DIM_PORT) &= ~_BV(LED1_DIM_PIN); }
 #define led2_dim_enable() { TIMSK1 |= _BV(OCIE1B); }
 #define led2_dim_disable() { TIMSK1 &= ~_BV(OCIE1B); \
 			     DDR(LED2_DIM_PORT) &= ~_BV(LED2_DIM_PIN); }
@@ -54,7 +54,7 @@ ISR(TIMER1_COMPB_vect)
 
 ISR(TIMER1_OVF_vect)
 {
-	DDR(LED2_DIM_PORT) &= ~_BV(LED2_DIM_PIN);
+	DDR(LED1_DIM_PORT) &= ~_BV(LED1_DIM_PIN);
 	DDR(LED2_DIM_PORT) &= ~_BV(LED2_DIM_PIN);
 }
 
