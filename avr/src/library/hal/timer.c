@@ -11,11 +11,11 @@
 #include <avr/interrupt.h>
 
 //timer2 overflow number
-#define TIMER_MAX (F_CPU*0.001)
+#define TIMER_MAX (F_CPU/1000)
 
 static volatile uint16_t time;
 
-ISR(TIMER2_OVF_vect)
+ISR(TIMER2_COMPA_vect)
 {
 	time++;
 }
@@ -30,7 +30,9 @@ void time_init(void)
 	TCCR2A = 0;
 	TCCR2B = _BV(WGM22) | _BV(CS20);
 
-	TIMSK2 |= _BV(TOIE2);
+	//execute interrupt when OCR2A matched
+	//attiny does not set overflow flag in this config...
+	TIMSK2 |= _BV(OCIE2A);
 }
 
 /*
