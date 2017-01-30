@@ -70,16 +70,11 @@ void loop(void)
 	}
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED) {
-		//change controlled led
-		if (button_pressed_time(BUTTON_DOWN) > HOLD_TIME) {
-			return;
-		}
-
 		led2_mode = (led2_mode + 1) % LIGHT_STEPS;
 	}
 
-	light_set(LED_FLOOD, led1_mode, MODE_NORMAL);
-	light_set(LED_SPOT, led2_mode, MODE_NORMAL);
+	light_set(LED_FLOOD, light_output[led1_mode], MODE_NORMAL);
+	light_set(LED_SPOT, light_output[led2_mode], MODE_NORMAL);
 
 	//turn off lamp if both leds are of for more than OFF_TIME
 	if (led1_mode == 0 && led2_mode == 0) {
