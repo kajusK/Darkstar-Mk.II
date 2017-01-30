@@ -100,26 +100,6 @@ void leds_init(void)
 }
 
 /*
- * Turn on led drivers, pwm output is not modified
- */
-void leds_enable(void)
-{
-	DDR(LED1_PWM_PORT) |= _BV(LED1_PWM_PIN);
-	DDR(LED2_PWM_PORT) |= _BV(LED2_PWM_PIN);
-	PORT(DRIVER_ENABLE_PORT) &= ~_BV(DRIVER_ENABLE_PIN);
-}
-
-/*
- * Turn off led drivers
- */
-void leds_disable(void)
-{
-	PORT(DRIVER_ENABLE_PORT) |= _BV(DRIVER_ENABLE_PIN);
-	DDR(LED1_PWM_PORT) &= ~_BV(LED1_PWM_PIN);
-	DDR(LED2_PWM_PORT) &= ~_BV(LED2_PWM_PIN);
-}
-
-/*
  * Setup current used when dimming enabled
  */
 void leds_dim_level(uint8_t level)

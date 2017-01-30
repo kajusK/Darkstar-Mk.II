@@ -21,12 +21,11 @@ extern void leds_init(void);
 /*
  * Turn on led drivers, pwm output is not modified
  */
-extern void leds_enable(void);
-
+#define leds_enable() PORT(DRIVER_ENABLE_PORT) &= ~_BV(DRIVER_ENABLE_PIN)
 /*
  * Turn off led drivers
  */
-extern void leds_disable(void);
+#define leds_disable() PORT(DRIVER_ENABLE_PORT) |= _BV(DRIVER_ENABLE_PIN)
 
 /*
  * Get leds enable status
