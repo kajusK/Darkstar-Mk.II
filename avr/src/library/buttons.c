@@ -35,7 +35,7 @@
 static uint8_t bt1_state, bt1_t_pressed, bt1_t_released;
 static uint8_t bt2_state, bt2_t_pressed, bt2_t_released;
 
-static enum bt_state get_state(uint8_t bt_state)
+static inline enum bt_state get_state(uint8_t bt_state)
 {
 	if (BT_JUST_PRESSED(bt_state))
 		return BUTTON_JUST_PRESSED;
