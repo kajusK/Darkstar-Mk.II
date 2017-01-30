@@ -64,8 +64,6 @@ ISR(TIMER1_OVF_vect)
 void leds_init(void)
 {
 	//pwm for setting led current
-	DDR(LED1_PWM_PORT) |= _BV(LED1_PWM_PIN);
-	DDR(LED2_PWM_PORT) |= _BV(LED2_PWM_PIN);
 	pwm_init_t0(PWM_PRESC_1, LED1_PWM_NUM, LED2_PWM_NUM);
 	pwm_t0_setA(0);
 	pwm_t0_setB(0);
@@ -138,6 +136,12 @@ void leds_dim_level(uint8_t level)
  */
 void led1_set(uint8_t brightness, uint8_t dimming_enable)
 {
+	//turn on output if required
+	if (brightness == 0)
+		DDR(LED1_PWM_PORT) &= ~_BV(LED1_PWM_PIN);
+	else
+		DDR(LED1_PWM_PORT) |= _BV(LED1_PWM_PIN);
+
 	if (!dimming_enable) {
 		led1_dim_disable();
 		led1_duty(brightness);
@@ -158,6 +162,12 @@ void led1_set(uint8_t brightness, uint8_t dimming_enable)
  */
 void led2_set(uint8_t brightness, uint8_t dimming_enable)
 {
+	//turn on output if required
+	if (brightness == 0)
+		DDR(LED2_PWM_PORT) &= ~_BV(LED2_PWM_PIN);
+	else
+		DDR(LED2_PWM_PORT) |= _BV(LED2_PWM_PIN);
+
 	if (!dimming_enable) {
 		led2_dim_disable();
 		led2_duty(brightness);
