@@ -53,21 +53,21 @@ void adc_disable(void)
  */
 void adc_pin_set(uint8_t pin)
 {
-	if (pin < 7)
+	if (pin < 8)
 		DIDR0 |= _BV(pin);
 #ifdef DIDR1
 	else
-		DIDR1 |= _BV(pin - 7);
+		DIDR1 |= _BV(pin - 8);
 #endif
 }
 
 void adc_pin_unset(uint8_t pin)
 {
-	if (pin < 7)
+	if (pin < 8)
 		DIDR0 &= ~_BV(pin);
 #ifdef DIDR1
 	else
-		DIDR1 &= ~_BV(pin - 7);
+		DIDR1 &= ~_BV(pin - 8);
 #endif
 }
 
@@ -99,7 +99,7 @@ uint16_t adc_read(uint8_t port, enum ad_ref ref)
 	ADCSRA |= _BV(ADSC);
 	loop_until_bit_is_clear(ADCSRA, ADSC);
 
-	return (ADCH << 8) | ADCL;
+	return (uint16_t)(ADCH << 8) | ADCL;
 }
 
 /*
