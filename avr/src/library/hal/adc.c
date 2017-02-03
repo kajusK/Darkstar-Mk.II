@@ -16,18 +16,18 @@
 	#define DIDR0 DIDR
 #endif
 
-//prescaler to limit adc to 200kHz
-#if F_CPU < 400000
+//prescaler to limit adc to 50kHz (can go up to 200kHz, but results are unstable)
+#if F_CPU < 100000
 	#define AD_PRESC 1 //2
-#elif F_CPU < 800000
+#elif F_CPU < 200000
 	#define AD_PRESC 2 //4
-#elif F_CPU < 1600000
+#elif F_CPU < 400000
 	#define AD_PRESC 3 //8
-#elif F_CPU < 3200000
+#elif F_CPU < 800000
 	#define AD_PRESC 4 //16
-#elif F_CPU < 6400000
+#elif F_CPU < 1600000
 	#define AD_PRESC 5 //32
-#elif F_CPU < 12800000
+#elif F_CPU < 3200000
 	#define AD_PRESC 6 //64
 #else
 	#define AD_PRESC 7 //128
