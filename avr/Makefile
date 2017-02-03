@@ -26,7 +26,7 @@ CFLAGS=-Wall -Wextra -std=c99 -Os -I $(SRCDIRS) -DF_CPU=$(F_CPU) -mmcu=$(MCU) -s
 LDFLAGS=-mmcu=$(MCU) -Wl,--gc-sections
 OBJCOPY=avr-objcopy
 UPLOADER=avrdude
-UPLOADER_FLAGS=-c usbtiny -p $(MCU) -B 1
+UPLOADER_FLAGS=-c usbtiny -p $(MCU)
 
 #resulting bin
 TARGET=$(PROGRAM).hex
