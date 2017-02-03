@@ -41,7 +41,7 @@
 //uncomment to calculate voltage decreased by forward voltage on diode
 #define SUPPLY_DIODE
 //forward voltage of diode on supply rail
-#define DIODE_FORWARD_VOLTAGE 350
+#define DIODE_FORWARD_VOLTAGE 320
 
 /*
  * Hard limits
@@ -51,7 +51,7 @@
 #define MAX_PWM		255
 
 //output will be limited to minimal level after exceeding this temperature
-#define TEMP_MAX	70
+#define TEMP_MAX	60
 //main light will be shut down after exceeding this temperature
 #define TEMP_SHUTDOWN	90
 //maximum PWM duty when over TEMP_MAX
