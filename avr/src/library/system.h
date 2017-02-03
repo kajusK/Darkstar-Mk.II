@@ -15,12 +15,12 @@
 #include "config.h"
 #include "buttons.h"
 
-#define system_temp() adc_core_temp();
+#define system_temp() adc_core_temp()
 
 #ifdef SUPPLY_DIODE
-	#define system_voltage() (adc_read_vcc() - DIODE_FORWARD_VOLTAGE);
+	#define system_voltage() (adc_read_vcc() - DIODE_FORWARD_VOLTAGE)
 #else
-	#define system_voltage() adc_read_vcc();
+	#define system_voltage() (adc_read_vcc())
 #endif
 
 /*
