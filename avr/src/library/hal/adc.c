@@ -126,5 +126,5 @@ int8_t adc_core_temp(void)
  */
 uint16_t adc_read_vcc(void)
 {
-	return 1100*(1024/adc_read(AD_MUX_INT_REF, AD_REF_VCC));
+	return (uint32_t)1100*1024/adc_read(AD_MUX_INT_REF, AD_REF_VCC);
 }
