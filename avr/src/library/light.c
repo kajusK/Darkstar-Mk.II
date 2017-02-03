@@ -140,8 +140,10 @@ void light_update(void)
 	/* undervoltage limit */
 	if (limits.undervoltage)
 		pwm_max = pwm_max < PWM_UNDERV ? pwm_max : PWM_UNDERV;
+
 	if (limits.heat_shutdown || limits.voltage_shutdown) {
 		leds_disable();
+		pwm_max = 0;
 	} else {
 		if (leds_setup[LED_SPOT].level == 0 &&
 				leds_setup[LED_FLOOD].level == 0)
