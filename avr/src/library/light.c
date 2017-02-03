@@ -102,7 +102,7 @@ static void led_update(enum e_led led, uint8_t level, uint8_t max)
  */
 struct s_limits light_limits(void)
 {
-	struct s_limits limits;
+	struct s_limits limits = (struct s_limits){ 0 };
 	uint8_t temp = adc_core_temp();
 	uint16_t voltage = system_voltage();
 
@@ -140,7 +140,6 @@ void light_update(void)
 	/* undervoltage limit */
 	if (limits.undervoltage)
 		pwm_max = pwm_max < PWM_UNDERV ? pwm_max : PWM_UNDERV;
-
 	if (limits.heat_shutdown || limits.voltage_shutdown) {
 		leds_disable();
 	} else {
