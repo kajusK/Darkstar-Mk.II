@@ -29,7 +29,7 @@
 	#define RXEN RXEN0
 	#define TXEN TXEN0
 	#define UCSZ0 UCSZ00
-	#define UCSZ1 UCSZ10
+	#define UCSZ1 UCSZ01
 #endif
 
 #if defined(UDR1) && defined(UART_USE_1)
