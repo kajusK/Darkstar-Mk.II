@@ -99,7 +99,7 @@ uint16_t adc_read(uint8_t port, enum ad_ref ref)
 	ADCSRA |= _BV(ADSC);
 	loop_until_bit_is_clear(ADCSRA, ADSC);
 
-	return (uint16_t)(ADCH << 8) | ADCL;
+	return ADCL | (uint16_t)(ADCH << 8);
 }
 
 /*
