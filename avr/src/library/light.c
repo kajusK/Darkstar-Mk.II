@@ -102,21 +102,29 @@ static void led_update(enum e_led led, uint8_t level, uint8_t max)
  */
 struct s_limits light_limits(void)
 {
-	struct s_limits limits = (struct s_limits){ 0 };
+	static struct s_limits limits = { 0, 0, 0, 0 };
 	uint8_t temp = adc_core_temp();
 	uint16_t voltage = system_voltage();
 
-	if (temp >= TEMP_MAX) {
+	if (temp >= TEMP_MAX)
 		limits.overheating = 1;
-		if (temp >= TEMP_SHUTDOWN)
-			limits.heat_shutdown = 1;
-	}
+	else if (temp <= TEMP_MAX - TEMP_HYSTERSIS)
+		limits.overheating = 0;
 
-	if (voltage <= VOLTAGE_MIN) {
+	if (temp >= TEMP_SHUTDOWN)
+		limits.heat_shutdown = 1;
+	else if (temp <= TEMP_SHUTDOWN - TEMP_HYSTERSIS)
+		limits.heat_shutdown = 0;
+
+	if (voltage <= VOLTAGE_MIN)
 		limits.undervoltage = 1;
-		if (voltage <= VOLTAGE_SHUTDOWN)
-			limits.voltage_shutdown = 1;
-	}
+	else if (voltage >= VOLTAGE_MIN + VOLTAGE_HYSTERSIS)
+		limits.undervoltage = 0;
+
+	if (voltage <= VOLTAGE_SHUTDOWN)
+		limits.voltage_shutdown = 1;
+	else if (voltage >= VOLTAGE_SHUTDOWN + VOLTAGE_HYSTERSIS)
+		limits.voltage_shutdown = 0;
 
 	return limits;
 }

@@ -53,7 +53,9 @@
 //output will be limited to minimal level after exceeding this temperature
 #define TEMP_MAX	60
 //main light will be shut down after exceeding this temperature
-#define TEMP_SHUTDOWN	90
+#define TEMP_SHUTDOWN	70
+//hystersis for applying temp limits, only considered for
+#define TEMP_HYSTERSIS	10
 //maximum PWM duty when over TEMP_MAX
 #define PWM_OVERHEAT_MAX 15
 
@@ -61,6 +63,8 @@
 #define VOLTAGE_MIN	2900
 //main light will be shut down after reaching this limit
 #define VOLTAGE_SHUTDOWN 2600
+//voltage hystersis
+#define VOLTAGE_HYSTERSIS 100
 //maximum PWM duty when under VOLTAGE_MIN
 #define PWM_UNDERV	15
 
