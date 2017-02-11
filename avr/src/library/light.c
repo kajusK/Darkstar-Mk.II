@@ -65,7 +65,8 @@ static void led_update(enum e_led led, uint8_t level, uint8_t max)
 	if (led >= LEDS_COUNT)
 		return;
 
-	if (level > max)
+	//apply limits for leds except small ones
+	if (level > max && led != LED_RED && led != LED_WHITE)
 		level = max;
 
 	if (level < DEFAULT_DIM_CURRENT && level != 0){
