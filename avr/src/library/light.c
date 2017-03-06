@@ -36,6 +36,8 @@ struct s_blink {
 static struct led_setup leds_setup[LEDS_COUNT];
 static struct s_blink blink;
 
+static uint8_t user_limit = 255;
+
 /*
  * Calculate level for constant mode
  */
@@ -64,6 +66,9 @@ static void led_update(enum e_led led, uint8_t level, uint8_t max)
 
 	if (led >= LEDS_COUNT)
 		return;
+
+	if (level > user_limit)
+		level = user_limit;
 
 	//apply limits for leds except small ones
 	if (level > max && led != LED_RED && led != LED_WHITE)
@@ -265,6 +270,14 @@ enum light_mode light_get(enum e_led led)
 	if (leds_setup[led].level == 0)
 		return MODE_OFF;
 	return leds_setup[led].mode;
+}
+
+/*
+ * Limit all outputs to this value
+ */
+void light_set_limit(uint8_t limit)
+{
+	user_limit = limit;
 }
 
 /*

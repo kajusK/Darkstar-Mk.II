@@ -81,6 +81,11 @@ extern void light_set_simple(enum e_led led, uint8_t level,
 extern enum light_mode light_get(enum e_led led);
 
 /*
+ * Limit all outputs to this value
+ */
+extern void light_set_limit(uint8_t limit);
+
+/*
  * Blink led
  * times are in tenths of ms
  *
