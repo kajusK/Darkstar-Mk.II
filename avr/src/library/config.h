@@ -60,9 +60,9 @@
 #define PWM_OVERHEAT_MAX 15
 
 //voltage in mV to limit max output
-#define VOLTAGE_MIN	3200
+#define VOLTAGE_MIN	3000
 //main light will be shut down after reaching this limit
-#define VOLTAGE_SHUTDOWN 2800
+#define VOLTAGE_SHUTDOWN 2600
 //voltage hystersis
 #define VOLTAGE_HYSTERSIS 100
 //maximum PWM duty when under VOLTAGE_MIN
