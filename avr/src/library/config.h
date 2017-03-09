@@ -26,6 +26,9 @@
 /*
  *  Default values
  */
+// enable serial
+#define UART_ENABLED
+
 // serial baudrate
 #define BAUD	9600
 

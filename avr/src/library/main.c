@@ -83,6 +83,7 @@ int main(void)
 	//the application software should always clear the WDRF flag and the WDE control bit in the initialization routine.
 	//MCUSR - contains reset flags
 
+#ifdef UART_ENABLED
 	uart_init();
 
 	sei();
@@ -90,6 +91,7 @@ int main(void)
 	fputs("FW version: " FW_VERSION"\n", stdout);
 	fputs("HW revision: " HW_VERSION"\n", stdout);
 	fputs("Built on: "__DATE__"\n\n", stdout);
+#endif
 
 	time_init();
 	adc_init();
