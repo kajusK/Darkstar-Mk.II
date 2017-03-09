@@ -60,6 +60,7 @@ $(OBJDIR)/$(PROGRAM).elf: $(OBJS)
 
 $(TARGET): $(OBJDIR)/$(PROGRAM).elf
 	$(OBJCOPY) -O ihex -R .eeprom $(OBJDIR)/$(PROGRAM).elf $(TARGET)
+	$(OBJCOPY) -O ihex -j .eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings $(OBJDIR)/$(PROGRAM).elf $(PROGRAM).epp
 	avr-size $(TARGET)
 
 -include $(DEPS)
@@ -68,7 +69,7 @@ clean:
 	-rm -r $(TARGET) $(OBJDIR)
 
 program:
-	$(UPLOADER) $(UPLOADER_FLAGS) -U flash:w:$(TARGET)
+	$(UPLOADER) $(UPLOADER_FLAGS) -U flash:w:$(TARGET) -U eeprom:w:${PROGRAM}.eep
 
 #fuses:
 #	$(UPLOADER) $(UPLOADER_FLAGS)

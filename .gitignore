@@ -4,6 +4,7 @@
 *.step
 *.cod
 *.hex
+*.epp
 *.lst
 *.o
 avr/obj/

@@ -17,6 +17,7 @@
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
 #include <util/delay.h>
+#include <avr/eeprom.h>
 
 #include "config.h"
 #include "hal/clock.h"
@@ -28,6 +29,8 @@
 #include "buttons.h"
 #include "light.h"
 
+#define WDT_EEPROM_ADDR (E2END-1)
+
 extern void init(void);
 extern void loop(void);
 
@@ -38,6 +41,25 @@ ISR(BADISR_vect)
 	//if bad interrupt was called, loop until wdt triggers reset
 	while (1)
 		;
+}
+
+/*
+ * Get amount of wdt errors
+ */
+static uint8_t wdt_err_count(void)
+{
+	return eeprom_read_byte((void *)WDT_EEPROM_ADDR);
+}
+
+/*
+ * Log wdt error
+ */
+static void wdt_err_inc(void)
+{
+	uint8_t latest = wdt_err_count();
+	if (latest == 0xff)
+		return;
+	eeprom_write_byte((void *)WDT_EEPROM_ADDR, latest+1);
 }
 
 /*
@@ -72,16 +94,20 @@ void system_loop(void)
 
 int main(void)
 {
+	//if last reset was caused by wdt, log it
+	if (MCUSR & WDRF) {
+		MCUSR &= ~ WDRF;
+		wdt_disable();
+		wdt_err_inc();
+	}
 
-	wdt_reset();
-	wdt_enable(WDT_TIMEOUT);
+	//workaround for fast clock on voltages over 3
+	//different value might be needed for different pieces of MCU
+	OSCCAL0 = 0;
 
 	//switch to 4MHz
 	sys_clk_presc(CLK_PRES_2);
 
-	// after watchdog reset clear reset flag and increment wdt reset counter
-	//the application software should always clear the WDRF flag and the WDE control bit in the initialization routine.
-	//MCUSR - contains reset flags
 
 #ifdef UART_ENABLED
 	uart_init();
@@ -92,6 +118,11 @@ int main(void)
 	fputs("HW revision: " HW_VERSION"\n", stdout);
 	fputs("Built on: "__DATE__"\n\n", stdout);
 #endif
+
+	sei();
+
+	wdt_reset();
+	wdt_enable(WDT_TIMEOUT);
 
 	time_init();
 	adc_init();
