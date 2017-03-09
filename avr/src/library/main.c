@@ -125,6 +125,11 @@ int main(void)
 	leds_init();
 	adc_pin_set(PHOTOTRANS_ADC);
 
+	//read current state of buttons 2 times to get the pressed state
+	//correctly. Useful for handling button pressed while battery is being connected
+	buttons_read();
+	buttons_read();
+
 	//initialize user mode
 	init();
 
