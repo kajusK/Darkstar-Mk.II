@@ -5,10 +5,6 @@
  *
  * Jakub Kaderka 2016
  *
- * TODO FUSE - ckdiv8 set, shipped with set -> 1MHz
-// The BOD mode of operation is selected using BODACT and BODPD fuse bits. - disable BOD in sleep
-// TODO handle various resets, log the errors
-// handle processing eeprom - configuration, most used modes,...
 // first board revision - need to use reset pin, with reset disabled, won't be able to ISP
  */
 
@@ -65,7 +61,7 @@ static void wdt_err_inc(void)
 /*
  * Run system tasks and user mode loop()
  */
-void main_loop(void)
+static void main_loop(void)
 {
 	buttons_read();
 
@@ -132,7 +128,7 @@ int main(void)
 	//initialize user mode
 	init();
 
-	while(1) {
+	while (1) {
 		main_loop();
 		latest_run = millis();
 		while (time_diff(latest_run, millis()) < SYS_TICK)
