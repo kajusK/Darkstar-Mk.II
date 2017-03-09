@@ -46,6 +46,16 @@ extern void system_loop(void);
 extern void power_off(uint8_t btn);
 
 /*
+ * Write data to eeprom
+ */
+extern void config_write(uint16_t addr, uint8_t *buf, uint8_t count);
+
+/*
+ * Read data from eeprom
+ */
+extern void config_read(uint16_t addr, uint8_t *buf, uint8_t count);
+
+/*
  * Return time in milliseconds since the init_time was called
  *
  * Overflows every 2^16 millisecond ~ 65 seconds

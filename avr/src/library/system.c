@@ -10,6 +10,7 @@
 #include <avr/wdt.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <avr/eeprom.h>
 
 #include "hal/sleep.h"
 #include "hal/leds.h"
@@ -79,4 +80,20 @@ void power_off(uint8_t btn)
 		if (btn & BUTTON2 && button_state(BUTTON2) == BUTTON_PRESSED)
 			break;
 	}
+}
+
+/*
+ * Read data from eeprom
+ */
+void config_read(uint16_t addr, uint8_t *buf, uint8_t count)
+{
+	eeprom_read_block(buf, (void *)addr, count);
+}
+
+/*
+ * Write data to eeprom
+ */
+void config_write(uint16_t addr, uint8_t *buf, uint8_t count)
+{
+	eeprom_update_block(buf, (void *)addr, count);
 }
