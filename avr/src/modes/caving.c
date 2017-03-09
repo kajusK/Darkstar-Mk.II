@@ -161,22 +161,22 @@ static uint8_t heat_limit(void)
 static void mode_programming(void)
 {
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_UP) < HOLD_TIME)
+	    button_pressed_time(BUTTON_UP) <= HOLD_TIME)
 		levels[cur_levels].flood += 50;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_DOWN) < HOLD_TIME)
+	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME)
 		levels[cur_levels].spot += 50;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
-	    button_pressed_time(BUTTON_DOWN) > HOLD_TIME && !hold_done) {
+	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
 		levels[cur_levels].red = levels[cur_levels].red == 1 ? 0 : 1;
 	}
 
 	/*
 	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
-	    button_pressed_time(BUTTON_UP) > HOLD_TIME && !hold_done) {
+	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
 		levels[cur_levels].white = levels[cur_levels].white == 1 ? 0 : 1;
 	}
@@ -246,15 +246,15 @@ static void mode_locked(void)
 static void mode_normal(void)
 {
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_UP) < HOLD_TIME)
+	    button_pressed_time(BUTTON_UP) <= HOLD_TIME)
 		cur_levels = (cur_levels + 1)%(config.num_levels+1);
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_DOWN) < HOLD_TIME)
+	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME)
 		cur_levels = cur_levels == 0 ? (config.num_levels-1) : cur_levels-1;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
-	    button_pressed_time(BUTTON_DOWN) > HOLD_TIME && !hold_done) {
+	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
 		light_set(LED_SPOT, 40, MODE_NORMAL);
 		//lamp off and holding - enable transport lock
@@ -274,7 +274,7 @@ static void mode_normal(void)
 	}
 
 	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
-	    button_pressed_time(BUTTON_UP) > HOLD_TIME && !hold_done) {
+	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
 		if (cur_levels == 0) {
 			report_voltage();
