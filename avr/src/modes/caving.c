@@ -68,11 +68,11 @@ const uint8_t limits[4] = {255, 200, 150, 100};
 static struct s_levels levels[10];
 static struct s_config config = { DEF_LEVELS, 0, MODE_NORMAL };
 
-static uint8_t cur_levels = 0;
-static enum e_mode cur_mode = NORMAL;
+static uint8_t cur_levels;
+static enum e_mode cur_mode;
 
-static uint8_t hold_done = 0;
-static uint8_t timer = 0;
+static uint8_t hold_done;
+static uint8_t timer;
 
 static void config_load(void)
 {
@@ -328,6 +328,11 @@ void init(void)
 		config_default();
 	else
 		config_load();
+
+	cur_levels = 0;
+	cur_mode = NORMAL;
+	hold_done = 0;
+	timer = 0;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED)
 		cur_mode = CONFIGURATION;
