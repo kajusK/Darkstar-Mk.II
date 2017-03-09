@@ -44,7 +44,11 @@ ISR(BADISR_vect)
  */
 static uint8_t wdt_err_count(void)
 {
-	return eeprom_read_byte((void *)WDT_EEPROM_ADDR);
+	uint8_t tmp = eeprom_read_byte((void *)WDT_EEPROM_ADDR);
+	//workaround for noninitialized memory
+	if (tmp == 0xff)
+		return 0;
+	return tmp;
 }
 
 /*
@@ -53,8 +57,9 @@ static uint8_t wdt_err_count(void)
 static void wdt_err_inc(void)
 {
 	uint8_t latest = wdt_err_count();
-	if (latest == 0xff)
+	if (latest == 0xfe)
 		return;
+
 	eeprom_write_byte((void *)WDT_EEPROM_ADDR, latest+1);
 }
 
