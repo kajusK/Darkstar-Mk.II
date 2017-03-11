@@ -23,11 +23,11 @@ static uint8_t dim_level = DEFAULT_DIM_CURRENT;
  * Set led current, 0-255
  */
 #if (LED1_PWM_NUM % 2 == 0)
-	#define led1_duty(duty) { pwm_t0_setB(duty << 1); }
-	#define led2_duty(duty) { pwm_t0_setA(duty << 1); }
+	#define led1_duty(duty) { pwm_t0_setB(duty); }
+	#define led2_duty(duty) { pwm_t0_setA(duty); }
 #else
-	#define led1_duty(duty) { pwm_t0_setA(duty << 1); }
-	#define led2_duty(duty) { pwm_t0_setB(duty << 1); }
+	#define led1_duty(duty) { pwm_t0_setA(duty); }
+	#define led2_duty(duty) { pwm_t0_setB(duty); }
 #endif
 
 #define led1_dim_enable() { TIMSK1 |= _BV(OCIE1A); }
@@ -129,7 +129,7 @@ void led1_set(uint8_t brightness, uint8_t dimming_enable)
 	}
 
 	led1_duty(dim_level);
-	pwm_t1_setA(brightness);
+	pwm_t1_setA(brightness << 1);
 	led1_dim_enable();
 }
 
@@ -155,6 +155,6 @@ void led2_set(uint8_t brightness, uint8_t dimming_enable)
 	}
 
 	led2_duty(dim_level);
-	pwm_t1_setB(brightness);
+	pwm_t1_setB(brightness << 1);
 	led2_dim_enable();
 }
