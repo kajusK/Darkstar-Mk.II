@@ -48,6 +48,10 @@ void init(void)
 	leds.spot = 0;
 	leds.flood = 0;
 	leds.red = 0;
+	leds_save.spot = 0;
+	leds_save.flood = 0;
+	leds_save.red = 0;
+
 	hold_done = 0;
 	in_sleep = 1;
 	timer = 0;
@@ -61,17 +65,17 @@ void init(void)
 void loop(void)
 {
 	//Control RED led
-	if (button_pressed_time(BUTTON_DOWN) >= HOLD_TIME &&
-	    button_state(BUTTON_DOWN) == BUTTON_PRESSED && !hold_done) {
+	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
+	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
 			hold_done = 1;
-			leds.red = leds.red % 2;
+			leds.red = (leds.red + 1) % 2;
 			if (leds.red != 0)
 				in_sleep = 0;
 	}
 
 	//will be turning off
-	if (button_pressed_time(BUTTON_UP) >= HOLD_TIME &&
-	    button_state(BUTTON_UP) == BUTTON_PRESSED && !hold_done) {
+	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
+	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
 
 		if (in_sleep) {
@@ -108,6 +112,7 @@ void loop(void)
 	if (button_state(BUTTON_DOWN) == BUTTON_RELEASED &&
 	    button_state(BUTTON_UP) == BUTTON_RELEASED) {
 		hold_done = 0;
+
 		//turn off lamp if both leds are of for more than OFF_TIME
 		if (leds.flood == 0 && leds.spot == 0 && leds.red == 0) {
 			timer++;
