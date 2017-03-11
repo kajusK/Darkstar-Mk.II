@@ -247,11 +247,11 @@ static void mode_normal(void)
 {
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
 	    button_pressed_time(BUTTON_UP) <= HOLD_TIME)
-		cur_levels = (cur_levels + 1)%(config.num_levels+1);
+		cur_levels = (cur_levels + 1)%config.num_levels;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
 	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME)
-		cur_levels = cur_levels == 0 ? (config.num_levels-1) : cur_levels-1;
+		cur_levels = cur_levels == 0 ? config.num_levels : cur_levels-1;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
@@ -299,7 +299,7 @@ static void mode_normal(void)
 
 		light_set(LED_FLOOD, levels[cur_levels].flood, config.light_control);
 		light_set(LED_SPOT, levels[cur_levels].spot, config.light_control);
-		light_set(LED_RED, levels[cur_levels].red, config.light_control);
+		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
 	}
 
 	//turn off lamp if all leds are of for more than OFF_TIME
@@ -323,11 +323,13 @@ void init(void)
 {
 	uint8_t c;
 
+	/*
 	config_read(0, &c, 1);
 	if (c == 0 || c > 10)
 		config_default();
 	else
 		config_load();
+		*/
 
 	cur_levels = 0;
 	cur_mode = NORMAL;
@@ -336,6 +338,8 @@ void init(void)
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED)
 		cur_mode = CONFIGURATION;
+
+	config_default();
 }
 
 
