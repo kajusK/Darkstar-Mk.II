@@ -69,9 +69,10 @@ void power_off(uint8_t btn)
 			int_pcmsk_disable(BUTTON2_INT);
 
 		//time for bit of bouncing
-		_delay_ms(1);
+		_delay_ms(10);
 		buttons_read();
 		_delay_ms(10);
+		buttons_read();
 		buttons_read();
 
 		//if still pressed, wake up, if not, go to sleep again
