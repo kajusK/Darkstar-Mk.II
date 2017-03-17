@@ -134,6 +134,7 @@ int main(void)
 	//correctly. Useful for handling button pressed while battery is being connected
 	buttons_read();
 	buttons_read();
+	buttons_read();
 
 	//initialize user mode
 	init();
