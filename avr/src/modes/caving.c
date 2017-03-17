@@ -160,6 +160,11 @@ static uint8_t heat_limit(void)
 
 static void mode_programming(void)
 {
+	if (cur_levels == 0) {
+		cur_mode = NORMAL;
+		return;
+	}
+
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
 	    button_pressed_time(BUTTON_UP) <= HOLD_TIME)
 		levels[cur_levels].flood += 50;
@@ -276,6 +281,7 @@ static void mode_normal(void)
 	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
+		light_set(LED_SPOT, 40, MODE_NORMAL);
 		if (cur_levels == 0) {
 			report_voltage();
 		} else {
