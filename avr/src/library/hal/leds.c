@@ -81,9 +81,12 @@ void leds_init(void)
 	TIMSK1 |= _BV(TOIE1);
 
 	PORT(LED_SM1_PORT) |= _BV(LED_SM1_PIN);
-	PORT(LED_SM2_PORT) |= _BV(LED_SM2_PIN);
 	DDR(LED_SM1_PORT) |= _BV(LED_SM1_PIN);
+
+#ifdef LED_SM2_PIN
+	PORT(LED_SM2_PORT) |= _BV(LED_SM2_PIN);
 	DDR(LED_SM2_PORT) |= _BV(LED_SM2_PIN);
+#endif
 
 	// if small leds are on port with high sink option, enable it
 	#if (MCU == attiny841)

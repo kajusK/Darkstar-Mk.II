@@ -107,12 +107,13 @@
 
 /* Small low-power leds */
 #define LED_SM1_PORT	A
-#define LED_SM1_PIN	0
-#define LED_SM2_PORT	A
-#define LED_SM2_PIN	7
+#define LED_SM1_PIN	7
+//comment to disable - e.g if not present
+//#define LED_SM2_PORT	A
+//#define LED_SM2_PIN	0
 
 /* Light measurement */
-#define PHOTOTRANS_ADC	9
+#define PHOTOTRANS_ADC	0
 
 /* Buttons */
 #define BUTTON1_PORT	B
