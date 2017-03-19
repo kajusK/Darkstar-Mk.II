@@ -75,6 +75,7 @@ void power_off(uint8_t btn)
 		buttons_read();
 		buttons_read();
 
+		wdt_reset();
 		//if still pressed, wake up, if not, go to sleep again
 		if (btn & BUTTON1 && button_state(BUTTON1) == BUTTON_PRESSED)
 			break;
