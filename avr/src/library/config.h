@@ -71,6 +71,13 @@
 //maximum PWM duty when under VOLTAGE_MIN
 #define PWM_UNDERV	15
 
+//PID constants for automatic light regulation
+#define PID_KP 30
+#define PID_KI 70
+#define PID_KD 0
+//output+x and output-x limits for PID
+#define PID_RANGE 100
+
 /*
  * IO definitions
  */

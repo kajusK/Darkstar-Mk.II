@@ -7,11 +7,13 @@
  */
 
 #include <inttypes.h>
+#include <stdlib.h>
 
 #include "config.h"
 #include "hal/adc.h"
 #include "hal/leds.h"
 #include "system.h"
+#include "utils/pid.h"
 #include "light.h"
 
 //used during linear calculation, should be equal to max supply voltage (in mV)
@@ -36,6 +38,7 @@ struct s_blink {
 static struct led_setup leds_setup[LEDS_COUNT];
 static struct s_blink blink;
 
+static struct s_pid pid;
 static uint8_t user_limit = 255;
 
 /*
@@ -55,9 +58,25 @@ static inline uint8_t mode_constant(uint8_t level)
  */
 static uint8_t mode_auto(uint8_t level)
 {
-	//TODO
-	//limit to level+X and level - X
-	return level;
+	uint8_t new;
+	if (level == 0)
+		return 0;
+
+	//created pid regulator if not created before
+	if (pid.kp != PID_KP)
+		pid_init(&pid, PID_KP, PID_KI, PID_KD);
+
+	new = pid_get(&pid, level, adc_read8(PHOTOTRANS_ADC, AD_REF_1_1V));
+	if (new < DEFAULT_DIM_CURRENT)
+		new = DEFAULT_DIM_CURRENT;
+
+	//limit maximum change from level value
+	if (abs((int16_t)new - level) <= PID_RANGE)
+		return new;
+
+	if (new > level)
+		return new + PID_RANGE;
+	return new - PID_RANGE;
 }
 
 static void led_update(enum e_led led, uint8_t level, uint8_t max)

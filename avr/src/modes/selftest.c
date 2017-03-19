@@ -88,7 +88,7 @@ void loop(void)
 #ifdef UART_ENABLED
 	printf("\e[1;1H\e[2JBat: %d\n", system_voltage());
 	printf("Temp: %d\n", adc_core_temp());
-	printf("Light: %d\n", adc_read(PHOTOTRANS_ADC, AD_REF_2_2V));
+	printf("Light: %d\n", adc_read(PHOTOTRANS_ADC, AD_REF_1_1V));
 	printf("Ram: %d\n", ram_free());
 #endif
 }
