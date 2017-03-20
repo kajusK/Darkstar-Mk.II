@@ -338,7 +338,7 @@ void light_blink(enum e_led led, uint8_t on_time, uint8_t period, uint8_t times)
 	blink.timer = 0;
 
 	if (leds_setup[led].level == 0) {
-		leds_setup[led].level = 128;
+		leds_setup[led].level = 40;
 		blink.prev_mode = MODE_OFF;
 	}
 }
