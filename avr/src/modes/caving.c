@@ -54,6 +54,7 @@ enum e_mode {
 #define TEMP_LIM_MIN	30	//don't limit below this level
 
 #define DEF_LEVELS 7
+#define MAX_LEVELS 10
 const struct s_levels def_levels[] = {{0, 0, 0}, // off - must be here
 				      {0, 0, 1}, //red only
 				      {1, 0, 0}, //low spot
@@ -65,7 +66,7 @@ const struct s_levels def_levels[] = {{0, 0, 0}, // off - must be here
 //limit levels for low voltage
 const uint8_t limits[4] = {255, 200, 150, 100};
 
-static struct s_levels levels[10];
+static struct s_levels levels[MAX_LEVELS];
 static struct s_config config = { DEF_LEVELS, 0, MODE_NORMAL };
 
 static uint8_t cur_levels;
@@ -211,7 +212,63 @@ static void mode_programming(void)
  */
 static void mode_config(void)
 {
+	uint8_t changed = 0;
+	uint8_t i = 0;
 
+	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
+	    button_pressed_time(BUTTON_UP) <= HOLD_TIME) {
+		config.num_levels = config.num_levels == MAX_LEVELS ? MAX_LEVELS : config.num_levels+1;
+		changed = 1;
+	}
+
+	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
+	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME) {
+		config.num_levels = config.num_levels == 1 ? 1 : config.num_levels-1;
+		changed = 1;
+	}
+
+	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
+	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
+		hold_done = 1;
+		changed = 1;
+		//programming mode enable/disable
+		if (config.prg_locked) {
+			config.prg_locked = 0;
+			light_blink(LED_RED, 25, 50, 2);
+		} else {
+			config.prg_locked = 1;
+			light_blink(LED_RED, 25, 50, 1);
+
+		}
+	}
+
+	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
+	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
+		hold_done = 1;
+		light_blink(LED_RED, 25, 50, config.num_levels);
+	}
+
+	if (button_state(BUTTON_UP) == BUTTON_RELEASED &&
+	    button_state(BUTTON_DOWN) == BUTTON_RELEASED) {
+		hold_done = 0;
+		timer++;
+	} else {
+		timer = 0;
+	}
+
+	if (light_get_blink_finished())
+		light_set(LED_RED, 1, MODE_NORMAL);
+
+	if (changed == 1 && timer == 0xff) {
+		for (i = 1; i < config.num_levels; i++) {
+			if (levels[i].red == 0 && levels[i].spot == 0 && levels[i].flood == 0) {
+				levels[i].spot = 50;
+				levels[i].red = i % 2;
+			}
+		}
+		changed = 0;
+		config_save();
+	}
 }
 
 /*
@@ -284,7 +341,7 @@ static void mode_normal(void)
 		light_set(LED_SPOT, 40, MODE_NORMAL);
 		if (cur_levels == 0) {
 			report_voltage();
-		} else {
+		} else if (config.prg_locked == 0) {
 			cur_mode = PROGRAMMING;
 			light_blink(LED_SPOT, 50, 100, 1);
 		}
