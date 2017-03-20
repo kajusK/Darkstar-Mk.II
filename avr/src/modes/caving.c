@@ -318,7 +318,6 @@ static void mode_normal(void)
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
-		light_set(LED_SPOT, 40, MODE_NORMAL);
 		//lamp off and holding - enable transport lock
 		if (cur_levels == 0) {
 			cur_mode = LOCKED;
@@ -338,7 +337,6 @@ static void mode_normal(void)
 	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
-		light_set(LED_SPOT, 40, MODE_NORMAL);
 		if (cur_levels == 0) {
 			report_voltage();
 		} else if (config.prg_locked == 0) {
