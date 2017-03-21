@@ -59,8 +59,9 @@ static inline uint8_t mode_constant(uint8_t level)
 static uint8_t mode_auto(uint8_t level)
 {
 	uint8_t new;
-	if (level == 0)
-		return 0;
+	//doesn't work with additional pwm modulation - same as sampling freq
+	if (level < DEFAULT_DIM_CURRENT)
+		return level;
 
 	//created pid regulator if not created before
 	if (pid.kp != PID_KP)
