@@ -87,15 +87,15 @@ void power_off(uint8_t btn)
 /*
  * Read data from eeprom
  */
-void config_read(uint16_t addr, uint8_t *buf, uint8_t count)
+void config_read(void *addr, uint8_t *buf, uint8_t count)
 {
-	eeprom_read_block(buf, (void *)addr, count);
+	eeprom_read_block(buf, addr, count);
 }
 
 /*
  * Write data to eeprom
  */
-void config_write(uint16_t addr, uint8_t *buf, uint8_t count)
+void config_write(void *addr, uint8_t *buf, uint8_t count)
 {
-	eeprom_update_block(buf, (void *)addr, count);
+	eeprom_update_block(buf, addr, count);
 }
