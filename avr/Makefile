@@ -12,7 +12,7 @@ MCU=attiny841
 F_CPU=4000000UL
 
 #program name
-PROGRAM=darkstar
+PROGRAM=${MODE}
 
 #dirs
 OBJDIR=obj
