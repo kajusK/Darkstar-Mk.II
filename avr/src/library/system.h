@@ -46,6 +46,11 @@ extern void system_loop(void);
 extern void power_off(uint8_t btn);
 
 /*
+ * Get amount of light in surrounding area
+ */
+extern uint16_t system_light(void);
+
+/*
  * Write data to eeprom
  */
 extern void config_write(uint16_t addr, uint8_t *buf, uint8_t count);

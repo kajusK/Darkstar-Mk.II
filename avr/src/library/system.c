@@ -15,6 +15,7 @@
 #include "hal/sleep.h"
 #include "hal/leds.h"
 #include "hal/int.h"
+#include "hal/adc.h"
 
 #include "buttons.h"
 
@@ -82,6 +83,14 @@ void power_off(uint8_t btn)
 		if (btn & BUTTON2 && button_state(BUTTON2) == BUTTON_PRESSED)
 			break;
 	}
+}
+
+/*
+ * Get amount of light in surrounding area
+ */
+uint16_t system_light(void)
+{
+	return adc_read(PHOTOTRANS_ADC, AD_REF_1_1V);
 }
 
 /*
