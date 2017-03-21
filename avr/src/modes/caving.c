@@ -111,6 +111,8 @@ static void report_voltage(void)
 		light_blink(LED_FLOOD, 30, 60, 4);
 	else if (voltage < VOLTAGE_5)
 		light_blink(LED_FLOOD, 30, 60, 5);
+	else
+		light_blink(LED_FLOOD, 30, 60, 6);
 }
 
 /*
