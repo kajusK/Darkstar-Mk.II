@@ -68,8 +68,8 @@ const struct s_levels def_levels[] = {{0, 0, 0}, // off - must be here
 				      {70, 200, 0}, //distance
 				      {200, 200, 0}}; //photo
 
-//limit levels for low voltage
-const uint8_t limits[4] = {255, 200, 150, 100};
+//limit levels for low voltage/high temp
+const uint8_t limits[4] = {255, 150, 80, 40};
 
 static struct s_levels levels[MAX_LEVELS];
 static struct s_config config = { DEF_LEVELS, 0, MODE_NORMAL };
