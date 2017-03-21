@@ -11,17 +11,17 @@
 
 #include <inttypes.h>
 
-#include "hal/adc.h"
-#include "config.h"
 #include "buttons.h"
 
-#define system_temp() adc_core_temp()
+/*
+ * Get MCU core temperature in degrees C
+ */
+extern int8_t system_temp(void);
 
-#ifdef SUPPLY_DIODE
-	#define system_voltage() (adc_read_vcc() + DIODE_FORWARD_VOLTAGE)
-#else
-	#define system_voltage() (adc_read_vcc())
-#endif
+/*
+ * Get power supply voltage
+ */
+extern uint16_t system_voltage(void);
 
 /*
  * Run system tasks, equivalent to returning from mode loop() with exception

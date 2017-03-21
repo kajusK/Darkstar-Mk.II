@@ -32,6 +32,10 @@ extern void loop(void);
 
 static uint16_t latest_run;
 
+//updated every loop
+static uint16_t sys_voltage;
+static int8_t sys_temp;
+
 ISR(BADISR_vect)
 {
 	//if bad interrupt was called, loop until wdt triggers reset
@@ -68,6 +72,8 @@ static void wdt_err_inc(void)
  */
 static void main_loop(void)
 {
+	sys_voltage = adc_read_vcc();
+	sys_temp = adc_core_temp();
 	buttons_read();
 
 	//call user script
@@ -75,6 +81,26 @@ static void main_loop(void)
 
 	light_update();
 	wdt_reset();
+}
+
+/*
+ * Get MCU core temperature in degrees C
+ */
+int8_t system_temp(void)
+{
+	return sys_temp;
+}
+
+/*
+ * Get power supply voltage
+ */
+uint16_t system_voltage(void)
+{
+#ifdef SUPPLY_DIODE
+	return sys_voltage + DIODE_FORWARD_VOLTAGE;
+#else
+	return sys_voltage;
+#endif
 }
 
 /*
@@ -86,6 +112,9 @@ void system_loop(void)
 {
 	while (time_diff(latest_run, millis()) < SYS_TICK)
 		;
+	sys_voltage = adc_read_vcc();
+	sys_temp = adc_core_temp();
+
 	buttons_read();
 	light_update();
 	wdt_reset();
