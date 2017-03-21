@@ -53,12 +53,17 @@ enum e_mode {
 #define TEMP_LIM_AGGRESIVE	50	//limit more aggresive above this value
 #define TEMP_LIM_MIN	30	//don't limit below this level
 
+//minimum settable light level
+#define LIGHT_MIN 5
+//increase by this value in programming mode
+#define LIGHT_STEP 50
+
 #define DEF_LEVELS 7
 #define MAX_LEVELS 10
 const struct s_levels def_levels[] = {{0, 0, 0}, // off - must be here
 				      {0, 0, 1}, //red only
-				      {1, 0, 0}, //low spot
-				      {80, 80, 0}, //small spaces
+				      {LIGHT_MIN, 0, 0}, //low spot
+				      {LIGHT_STEP, LIGHT_STEP, 0}, //small spaces
 				      {100, 50, 0}, //normal walking
 				      {70, 200, 0}, //distance
 				      {200, 200, 0}}; //photo
@@ -169,12 +174,24 @@ static void mode_programming(void)
 	}
 
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_UP) <= HOLD_TIME)
-		levels[cur_levels].flood += 50;
+	    button_pressed_time(BUTTON_UP) <= HOLD_TIME) {
+		if (levels[cur_levels].flood > 255-LIGHT_STEP)
+			levels[cur_levels].flood = 0;
+		else if (levels[cur_levels].flood == 0)
+			levels[cur_levels].flood = LIGHT_MIN;
+		else
+			levels[cur_levels].flood += LIGHT_STEP;
+	}
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME)
-		levels[cur_levels].spot += 50;
+	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME) {
+		if (levels[cur_levels].spot > 255-LIGHT_STEP)
+			levels[cur_levels].spot = 0;
+		else if (levels[cur_levels].spot == 0)
+			levels[cur_levels].spot = LIGHT_MIN;
+		else
+			levels[cur_levels].spot += LIGHT_STEP;
+	}
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
