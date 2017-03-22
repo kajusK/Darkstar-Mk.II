@@ -42,10 +42,9 @@ enum e_mode {
 #define OFF_TIME 200
 
 //voltage levels to report
-#define VOLTAGE_5	3600
-#define VOLTAGE_4	3500
-#define VOLTAGE_3	3300	//limit 1
-#define VOLTAGE_2	3200	//limit 2
+#define VOLTAGE_4	3700
+#define VOLTAGE_3	3500	//limit 1
+#define VOLTAGE_2	3250	//limit 2
 #define VOLTAGE_1	3100	//limit 3
 
 //temperature limits
@@ -100,24 +99,22 @@ static void config_default(void)
 }
 
 /*
- * Blink remaining charge
+ * Get current voltage rating
  */
-static void report_voltage(void)
+static uint8_t rate_voltage(void)
 {
 	uint16_t voltage = system_voltage();
 
 	if (voltage < VOLTAGE_1)
-		light_blink(LED_FLOOD, 30, 60, 1);
+		return 0;
 	else if (voltage < VOLTAGE_2)
-		light_blink(LED_FLOOD, 30, 60, 2);
+		return 1;
 	else if (voltage < VOLTAGE_3)
-		light_blink(LED_FLOOD, 30, 60, 3);
+		return 2;
 	else if (voltage < VOLTAGE_4)
-		light_blink(LED_FLOOD, 30, 60, 4);
-	else if (voltage < VOLTAGE_5)
-		light_blink(LED_FLOOD, 30, 60, 5);
+		return 3;
 	else
-		light_blink(LED_FLOOD, 30, 60, 6);
+		return 4;
 }
 
 /*
@@ -127,21 +124,15 @@ static void report_voltage(void)
 static uint8_t check_voltage(void)
 {
 	static uint8_t reported = 0;
-	uint16_t voltage = system_voltage();
+	uint8_t level = rate_voltage();
 
-	if (voltage > VOLTAGE_3)
+	if (level > 2) {
 		reported = 0;
-
-	if (voltage < VOLTAGE_1 && reported < 3) {
-		light_blink(LED_FLOOD, 30, 60, 3);
-		reported = 3;
-	} else if (voltage < VOLTAGE_2 && reported < 2) {
-		light_blink(LED_FLOOD, 30, 60, 2);
-		reported = 2;
-	} else if (voltage < VOLTAGE_3 && reported < 1) {
-		light_blink(LED_FLOOD, 30, 60, 1);
-		reported = 1;
+		return 0;
 	}
+
+	reported = 3 - level;
+	light_blink(LED_FLOOD, 30, 60, reported);
 
 	return reported;
 }
@@ -357,7 +348,8 @@ static void mode_normal(void)
 	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
 		hold_done = 1;
 		if (cur_levels == 0) {
-			report_voltage();
+			//blink voltage level
+			light_blink(LED_FLOOD, 30, 60, rate_voltage()+1);
 		} else if (config.prg_locked == 0) {
 			cur_mode = PROGRAMMING;
 			light_blink(LED_SPOT, 50, 100, 1);
