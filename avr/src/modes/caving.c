@@ -30,6 +30,7 @@ enum e_mode {
 	PROGRAMMING,
 	LOCKED,
 	CONFIGURATION,
+	CONFIGURATION_ENTRY,	//entering config mode, ignore buttons
 };
 
 #define BUTTON_UP BUTTON1
@@ -222,8 +223,16 @@ static void mode_programming(void)
  */
 static void mode_config(void)
 {
-	uint8_t changed = 0;
+	static uint8_t changed = 0;
 	uint8_t i = 0;
+
+	//ignore first button press that is used to enter this mode
+	if (cur_mode == CONFIGURATION_ENTRY) {
+		light_set(LED_RED, 1, MODE_NORMAL);
+		if (button_state(BUTTON_DOWN) != BUTTON_RELEASED)
+			return;
+		cur_mode = CONFIGURATION;
+	}
 
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
 	    button_pressed_time(BUTTON_UP) <= HOLD_TIME) {
@@ -407,7 +416,7 @@ void init(void)
 	timer = 0;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED)
-		cur_mode = CONFIGURATION;
+		cur_mode = CONFIGURATION_ENTRY;
 }
 
 
@@ -425,6 +434,7 @@ void loop(void)
 	case LOCKED:
 		mode_locked();
 		break;
+	case CONFIGURATION_ENTRY:
 	case CONFIGURATION:
 		mode_config();
 		break;
