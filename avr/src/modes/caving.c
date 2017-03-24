@@ -395,13 +395,11 @@ void init(void)
 {
 	uint8_t c;
 
-	/*
 	config_read(0, &c, 1);
 	if (c == 0 || c > 10)
 		config_default();
 	else
 		config_load();
-		*/
 
 	cur_levels = 0;
 	cur_mode = NORMAL;
@@ -410,8 +408,6 @@ void init(void)
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED)
 		cur_mode = CONFIGURATION;
-
-	config_default();
 }
 
 

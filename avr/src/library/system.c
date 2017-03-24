@@ -106,5 +106,8 @@ void config_read(void *addr, uint8_t *buf, uint8_t count)
  */
 void config_write(void *addr, uint8_t *buf, uint8_t count)
 {
+	wdt_disable();
 	eeprom_update_block(buf, addr, count);
+	wdt_reset();
+	wdt_enable(WDT_TIMEOUT);
 }
