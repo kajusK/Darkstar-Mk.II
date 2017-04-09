@@ -7,6 +7,8 @@
  */
 
 #include <inttypes.h>
+#include <stdio.h>
+
 #include "buttons.h"
 #include "system.h"
 #include "hal/uart.h"
@@ -18,6 +20,8 @@
 uint8_t kp;
 uint8_t ki;
 uint8_t kd;
+
+uint8_t enabled = 0;
 
 struct s_pid pid;
 
@@ -36,7 +40,7 @@ void init(void)
 void loop(void)
 {
 	char c = 0;
-	uint8_t res;
+	uint8_t res, adc;
 
 	if (uart_check_rx() != 0)
 		c = getchar();
@@ -60,6 +64,13 @@ void loop(void)
 		case 'z':
 			kd = kd == 0 ? kd : kd-1;
 			break;
+		case 'r':
+			enabled = 1;
+			break;
+		case 'b':
+			enabled = 0;
+			break;
+
 	}
 
 	pid.kp = kp;
@@ -71,14 +82,20 @@ void loop(void)
 	printf("\e[1;1H\e[2JKP: %d\n", kp);
 	printf("KI: %d\n", ki);
 	printf("KD: %d\n", kd);
-	res = pid_get(&pid, LEVEL, adc_read8(PHOTOTRANS_ADC, AD_REF_1_1V)*2);
-	printf("res: %d\n", res);
+	adc = adc_read8(PHOTOTRANS_ADC, AD_REF_1_1V);
+	res = pid_get(&pid, LEVEL, adc);
+	printf("adc: %d\n", adc);
 
-	if (res < 25)
-		res = 25;
+	if (res < DEFAULT_DIM_CURRENT)
+		res = DEFAULT_DIM_CURRENT;
 
 	if (res > 150)
 		res = 150;
 
-	light_set_simple(LED_SPOT, res, MODE_NORMAL);
+	printf("res: %d\n", res);
+
+	if (enabled)
+		light_set_simple(LED_FLOOD, res, MODE_NORMAL);
+	else
+		light_set_simple(LED_FLOOD, 0, MODE_NORMAL);
 }
