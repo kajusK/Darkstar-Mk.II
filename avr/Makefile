@@ -66,7 +66,7 @@ $(TARGET): $(OBJDIR)/$(PROGRAM).elf
 -include $(DEPS)
 
 clean:
-	-rm -r $(TARGET) $(OBJDIR)
+	-rm -r $(OBJDIR) *.hex *.epp
 
 program:
 	$(UPLOADER) $(UPLOADER_FLAGS) -U flash:w:$(TARGET) -U eeprom:w:${PROGRAM}.eep
