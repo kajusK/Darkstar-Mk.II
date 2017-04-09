@@ -71,5 +71,6 @@ clean:
 program:
 	$(UPLOADER) $(UPLOADER_FLAGS) -U flash:w:$(TARGET) -U eeprom:w:${PROGRAM}.eep
 
-#fuses:
-#	$(UPLOADER) $(UPLOADER_FLAGS)
+#SELFPRGEN enable
+fuses:
+	$(UPLOADER) $(UPLOADER_FLAGS) -U efuse:w:0xFE:m
