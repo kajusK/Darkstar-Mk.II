@@ -76,8 +76,8 @@ static uint8_t mode_auto(uint8_t level)
 		return new;
 
 	if (new > level)
-		return new + PID_RANGE;
-	return new - PID_RANGE;
+		return level + PID_RANGE;
+	return level - PID_RANGE;
 }
 
 static void led_update(enum e_led led, uint8_t level, uint8_t max)
