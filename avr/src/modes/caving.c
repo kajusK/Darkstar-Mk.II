@@ -275,9 +275,6 @@ static void mode_config(void)
 		timer = 0;
 	}
 
-	if (light_get_blink_finished())
-		light_set(LED_RED, 1, MODE_NORMAL);
-
 	if (changed == 1 && timer == 0xff) {
 		for (i = 1; i < config.num_levels; i++) {
 			if (levels[i].red == 0 && levels[i].spot == 0 && levels[i].flood == 0) {
