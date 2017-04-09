@@ -17,6 +17,10 @@
 #include "hal/adc.h"
 #include "light.h"
 
+#ifndef UART_ENABLED
+	#error "UART_ENABLED not set"
+#endif
+
 uint8_t kp;
 uint8_t ki;
 uint8_t kd;
