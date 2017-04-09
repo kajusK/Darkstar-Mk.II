@@ -52,7 +52,7 @@ uint8_t pid_get(struct s_pid *pid, uint8_t required, uint8_t current)
 	d = pid->kd * (pid->prev - current);
 	pid->prev = current;
 
-	ret = (p + i + (int32_t)d)/PID_SCALE;
+	ret = ((int32_t)p + (int32_t)i + (int32_t)d)/PID_SCALE;
 	if (ret > INT8_MAX)
 		return INT8_MAX;
 	if (ret < 0)
