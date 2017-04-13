@@ -35,8 +35,8 @@ static uint8_t in_sleep;
 //if all leds are of for more than 2s, turn off
 #define OFF_TIME 200
 
-#define LIGHT_STEPS 5
-uint8_t light_output[LIGHT_STEPS] = {0, 1, 50, 150, 200};
+#define LIGHT_STEPS 6
+uint8_t light_output[LIGHT_STEPS] = {0, 5, 40, 100, 150, 200};
 
 /*
  * This function will be called after connecting power to headlamp
@@ -105,9 +105,9 @@ void loop(void)
 	}
 
 
-	light_set(LED_FLOOD, light_output[leds.flood], MODE_NORMAL);
-	light_set(LED_SPOT, light_output[leds.spot], MODE_NORMAL);
-	light_set(LED_RED, leds.red, MODE_NORMAL);
+	light_set_simple(LED_FLOOD, light_output[leds.flood], MODE_NORMAL);
+	light_set_simple(LED_SPOT, light_output[leds.spot], MODE_NORMAL);
+	light_set_simple(LED_RED, leds.red, MODE_NORMAL);
 
 	if (button_state(BUTTON_DOWN) == BUTTON_RELEASED &&
 	    button_state(BUTTON_UP) == BUTTON_RELEASED) {
