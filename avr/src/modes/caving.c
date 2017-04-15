@@ -210,6 +210,13 @@ static void mode_programming(void)
 		if (timer == 0xff) {
 			cur_mode = NORMAL;
 			light_blink(LED_SPOT, 50, 100, 1);
+
+			//if nothing is set, turn on flood
+			if (levels[cur_levels].red == 0 &&
+			    levels[cur_levels].flood == 0 &&
+			    levels[cur_levels].spot == 0)
+				levels[cur_levels].flood = LIGHT_MIN;
+
 			config_save();
 			return;
 		}
