@@ -131,9 +131,13 @@ static uint8_t check_voltage(void)
 		reported = 0;
 		return 0;
 	}
+	level = 3 - level;
 
-	reported = 3 - level;
-	light_blink(LED_FLOOD, 30, 60, reported);
+	if (level >= reported)
+		return reported;
+
+	reported = level;
+	light_blink(LED_SPOT, 30, 60, reported);
 
 	return reported;
 }
