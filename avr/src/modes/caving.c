@@ -366,7 +366,7 @@ static void mode_normal(void)
 		hold_done = 1;
 		if (cur_levels == 0) {
 			//blink voltage level
-			light_blink(LED_FLOOD, 30, 60, rate_voltage()+1);
+			light_blink(LED_SPOT, 30, 60, rate_voltage()+1);
 		} else if (config.prg_locked == 0) {
 			cur_mode = PROGRAMMING;
 			light_blink(LED_SPOT, 50, 100, 1);
