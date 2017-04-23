@@ -41,10 +41,11 @@
 //within reasonable led driver efficiency region
 #define DEFAULT_DIM_CURRENT	32
 
-//uncomment to calculate voltage decreased by forward voltage on diode
-#define SUPPLY_DIODE
-//forward voltage of diode on supply rail
-#define DIODE_FORWARD_VOLTAGE 320
+//uncomment to add VOLTAGE_DIFF to measured power supply voltage
+#define VOLTAGE_DIFF_ENABLE
+//voltage difference between input and MCU itself (e.g. on diode, resistor,...)
+//preferably measure real value
+#define VOLTAGE_DIFF 90
 
 /*
  * Hard limits

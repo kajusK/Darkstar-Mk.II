@@ -96,8 +96,8 @@ int8_t system_temp(void)
  */
 uint16_t system_voltage(void)
 {
-#ifdef SUPPLY_DIODE
-	return sys_voltage + DIODE_FORWARD_VOLTAGE;
+#ifdef VOLTAGE_DIFF_ENABLE
+	return sys_voltage + VOLTAGE_DIFF;
 #else
 	return sys_voltage;
 #endif
