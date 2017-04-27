@@ -82,8 +82,16 @@ static uint8_t timer;
 
 static void config_load(void)
 {
+	int i;
+
 	config_read(0, (uint8_t *)&config, sizeof(config));
 	config_read(sizeof(config), (uint8_t *)&levels, sizeof(levels[0])*config.num_levels);
+
+	//if mode is completely empty (e.g. corrupted memory), turn flood on
+	for (i = 1; i < config.num_levels; i++) {
+		if (levels[i].red == 0 && levels[i].flood == 0 && levels[i].spot == 0)
+			levels[i].flood = LIGHT_MIN;
+	}
 }
 
 static void config_save(void)
@@ -194,14 +202,6 @@ static void mode_programming(void)
 		hold_done = 1;
 		levels[cur_levels].red = levels[cur_levels].red == 1 ? 0 : 1;
 	}
-
-	/*
-	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
-	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
-		hold_done = 1;
-		levels[cur_levels].white = levels[cur_levels].white == 1 ? 0 : 1;
-	}
-	*/
 
 	if (button_state(BUTTON_UP) == BUTTON_RELEASED &&
 	    button_state(BUTTON_DOWN) == BUTTON_RELEASED) {
@@ -342,7 +342,7 @@ static void mode_normal(void)
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
 	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME)
-		cur_levels = cur_levels == 0 ? config.num_levels : cur_levels-1;
+		cur_levels = cur_levels == 0 ? config.num_levels - 1: cur_levels-1;
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
