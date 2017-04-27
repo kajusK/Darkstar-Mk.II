@@ -224,9 +224,11 @@ static void mode_programming(void)
 		timer = 0;
 	}
 
-	light_set(LED_FLOOD, levels[cur_levels].flood, MODE_NORMAL);
-	light_set(LED_SPOT, levels[cur_levels].spot, MODE_NORMAL);
-	light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
+	if (light_get_blink_finished()) {
+		light_set(LED_FLOOD, levels[cur_levels].flood, MODE_NORMAL);
+		light_set(LED_SPOT, levels[cur_levels].spot, MODE_NORMAL);
+		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
+	}
 }
 
 /*
