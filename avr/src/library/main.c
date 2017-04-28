@@ -138,7 +138,6 @@ int main(void)
 	//switch to 4MHz
 	sys_clk_presc(CLK_PRES_2);
 
-
 #ifdef UART_ENABLED
 	uart_init();
 
@@ -147,9 +146,9 @@ int main(void)
 	fputs("FW version: " FW_VERSION"\n", stdout);
 	fputs("HW revision: " HW_VERSION"\n", stdout);
 	fputs("Built on: "__DATE__"\n\n", stdout);
-#endif
-
+#else
 	sei();
+#endif
 
 	wdt_reset();
 	wdt_enable(WDT_TIMEOUT);
