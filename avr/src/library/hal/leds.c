@@ -126,8 +126,10 @@ void led1_set(uint8_t brightness, uint8_t dimming_enable)
 		DDR(LED1_PWM_PORT) |= _BV(LED1_PWM_PIN);
 
 	if (!dimming_enable) {
-		led1_dim_disable();
 		led1_duty(brightness);
+		led1_dim_disable();
+		if (brightness == 0)
+			DDR(LED1_DIM_PORT) |= _BV(LED1_DIM_PIN);
 		return;
 	}
 
@@ -152,8 +154,10 @@ void led2_set(uint8_t brightness, uint8_t dimming_enable)
 		DDR(LED2_PWM_PORT) |= _BV(LED2_PWM_PIN);
 
 	if (!dimming_enable) {
-		led2_dim_disable();
 		led2_duty(brightness);
+		led2_dim_disable();
+		if (brightness == 0)
+			DDR(LED2_DIM_PORT) |= _BV(LED2_DIM_PIN);
 		return;
 	}
 
