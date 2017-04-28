@@ -121,6 +121,7 @@
 //#define LED_SM2_PIN	0
 
 /* Light measurement */
+//comment to disable
 #define PHOTOTRANS_ADC	0
 
 /* Buttons */

@@ -12,6 +12,7 @@
 #include <inttypes.h>
 
 #include "buttons.h"
+#include "config.h"
 
 /*
  * Get MCU core temperature in degrees C
@@ -45,10 +46,12 @@ extern void system_loop(void);
  */
 extern void power_off(uint8_t btn);
 
+#ifdef PHOTOTRANS_ADC
 /*
  * Get amount of light in surrounding area
  */
-extern uint16_t system_light(void);
+extern uint8_t system_light(void);
+#endif
 
 /*
  * Write data to eeprom

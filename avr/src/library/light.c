@@ -58,6 +58,7 @@ static inline uint8_t mode_constant(uint8_t level)
  */
 static uint8_t mode_auto(uint8_t level)
 {
+#ifdef PHOTOTRANS_ADC
 	uint8_t new;
 	//doesn't work with additional pwm modulation - same as sampling freq
 	if (level < DEFAULT_DIM_CURRENT)
@@ -67,7 +68,7 @@ static uint8_t mode_auto(uint8_t level)
 	if (pid.kp != PID_KP)
 		pid_init(&pid, PID_KP, PID_KI, PID_KD);
 
-	new = pid_get(&pid, level, adc_read8(PHOTOTRANS_ADC, AD_REF_1_1V));
+	new = pid_get(&pid, level, system_light());
 	if (new < DEFAULT_DIM_CURRENT)
 		new = DEFAULT_DIM_CURRENT;
 
@@ -78,6 +79,9 @@ static uint8_t mode_auto(uint8_t level)
 	if (new > level)
 		return level + PID_RANGE;
 	return level - PID_RANGE;
+#else
+	return level;
+#endif
 }
 
 static void led_update(enum e_led led, uint8_t level, uint8_t max)

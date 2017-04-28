@@ -156,7 +156,9 @@ int main(void)
 	time_init();
 	adc_init();
 	leds_init();
+#ifdef PHOTOTRANS_ADC
 	adc_pin_set(PHOTOTRANS_ADC);
+#endif
 
 	//read current state of buttons 2 times to get the pressed state
 	//correctly. Useful for handling button pressed while battery is being connected

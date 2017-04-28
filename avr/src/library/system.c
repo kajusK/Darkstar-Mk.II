@@ -85,13 +85,15 @@ void power_off(uint8_t btn)
 	}
 }
 
+#ifdef PHOTOTRANS_ADC
 /*
  * Get amount of light in surrounding area
  */
-uint16_t system_light(void)
+uint8_t system_light(void)
 {
-	return adc_read(PHOTOTRANS_ADC, AD_REF_1_1V);
+	return adc_read8(PHOTOTRANS_ADC, AD_REF_1_1V);
 }
+#endif
 
 /*
  * Read data from eeprom
