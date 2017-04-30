@@ -26,7 +26,7 @@ CFLAGS=-Wall -Wextra -std=c99 -Os -I $(SRCDIRS) -DF_CPU=$(F_CPU) -mmcu=$(MCU) -s
 LDFLAGS=-mmcu=$(MCU) -Wl,--gc-sections
 OBJCOPY=avr-objcopy
 UPLOADER=avrdude
-UPLOADER_FLAGS=-c usbtiny -p $(MCU)
+UPLOADER_FLAGS=-c arduino -b 9600 -P /dev/ttyUSB0 -p $(MCU)
 
 #resulting bin
 TARGET=$(PROGRAM).hex
@@ -60,16 +60,16 @@ $(OBJDIR)/$(PROGRAM).elf: $(OBJS)
 
 $(TARGET): $(OBJDIR)/$(PROGRAM).elf
 	$(OBJCOPY) -O ihex -R .eeprom $(OBJDIR)/$(PROGRAM).elf $(TARGET)
-	$(OBJCOPY) -O ihex -j .eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings $(OBJDIR)/$(PROGRAM).elf $(PROGRAM).epp
+	#$(OBJCOPY) -O ihex -j .eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings $(OBJDIR)/$(PROGRAM).elf $(PROGRAM).epp
 	avr-size $(TARGET)
 
 -include $(DEPS)
 
 clean:
-	-rm -r $(OBJDIR) *.hex *.epp
+	-rm -r $(OBJDIR) *.hex
 
 program:
-	$(UPLOADER) $(UPLOADER_FLAGS) -U flash:w:$(TARGET) -U eeprom:w:${PROGRAM}.eep
+	$(UPLOADER) $(UPLOADER_FLAGS) -U flash:w:$(TARGET)
 
 #SELFPRGEN enable
 fuses:
