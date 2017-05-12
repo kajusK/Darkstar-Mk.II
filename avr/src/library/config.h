@@ -45,7 +45,7 @@
 #define VOLTAGE_DIFF_ENABLE
 //voltage difference between input and MCU itself (e.g. on diode, resistor,...)
 //preferably measure real value
-#define VOLTAGE_DIFF 90
+#define VOLTAGE_DIFF 162
 
 /*
  * Hard limits
@@ -55,9 +55,9 @@
 #define MAX_PWM		255
 
 //output will be limited to minimal level after exceeding this temperature
-#define TEMP_MAX	60
+#define TEMP_MAX	50
 //main light will be shut down after exceeding this temperature
-#define TEMP_SHUTDOWN	70
+#define TEMP_SHUTDOWN	60
 //hystersis for applying temp limits, only considered for
 #define TEMP_HYSTERSIS	10
 //maximum PWM duty when over TEMP_MAX
@@ -68,7 +68,7 @@
 //main light will be shut down after reaching this limit
 #define VOLTAGE_SHUTDOWN 2600
 //voltage hystersis
-#define VOLTAGE_HYSTERSIS 100
+#define VOLTAGE_HYSTERSIS 200
 //maximum PWM duty when under VOLTAGE_MIN
 #define PWM_UNDERV	15
 
