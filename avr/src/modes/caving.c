@@ -135,13 +135,14 @@ static uint8_t check_voltage(void)
 	static uint8_t reported = 0;
 	uint8_t level = rate_voltage();
 
-	if (level > 2) {
+	if (level > 3)
 		reported = 0;
+	if (level > 2)
 		return 0;
-	}
+
 	level = 3 - level;
 
-	if (level >= reported)
+	if (level <= reported)
 		return reported;
 
 	reported = level;
@@ -378,16 +379,16 @@ static void mode_normal(void)
 
 	//apply changes from above
 	if (light_get_blink_finished()) {
+		light_set(LED_FLOOD, levels[cur_levels].flood, config.light_control);
+		light_set(LED_SPOT, levels[cur_levels].spot, config.light_control);
+		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
+
 		if (cur_levels != 0) {
 			uint8_t min = limits[check_voltage()];
 			uint8_t tmp = heat_limit();
 			min = tmp < min ? tmp : min;
 			light_set_limit(min);
 		}
-
-		light_set(LED_FLOOD, levels[cur_levels].flood, config.light_control);
-		light_set(LED_SPOT, levels[cur_levels].spot, config.light_control);
-		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
 	}
 
 	//turn off lamp if all leds are of for more than OFF_TIME
