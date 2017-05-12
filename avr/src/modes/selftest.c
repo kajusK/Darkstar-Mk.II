@@ -32,7 +32,7 @@ uint8_t led2_mode;
 
 #define LIGHT_STEPS 6
 
-uint8_t light_output[LIGHT_STEPS] = {0, 15, 50, 120, 180, 255};
+uint8_t light_output[LIGHT_STEPS] = {0, 1, 15, 50, 150, 255};
 
 /*
  * This function will be called after connecting power to headlamp
