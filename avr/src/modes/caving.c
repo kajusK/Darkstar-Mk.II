@@ -45,16 +45,16 @@ enum e_mode {
 //voltage levels to report
 #define VOLTAGE_4	3700
 #define VOLTAGE_3	3500	//limit 1
-#define VOLTAGE_2	3250	//limit 2
+#define VOLTAGE_2	3300	//limit 2
 #define VOLTAGE_1	3100	//limit 3
 
 //temperature limits
 #define TEMP_LIM_START	40	//enable limiting above this temperature
-#define TEMP_LIM_AGGRESIVE	50	//limit more aggresive above this value
+#define TEMP_LIM_AGGRESIVE	45	//limit more aggresive above this temperature
 #define TEMP_LIM_MIN	30	//don't limit below this level
 
 //minimum settable light level
-#define LIGHT_MIN 5
+#define LIGHT_MIN 1
 //increase by this value in programming mode
 #define LIGHT_STEP 50
 
@@ -69,7 +69,7 @@ const struct s_levels def_levels[] = {{0, 0, 0}, // off - must be here
 				      {200, 200, 0}}; //photo
 
 //limit levels for low voltage/high temp
-const uint8_t limits[4] = {255, 150, 80, 40};
+const uint8_t limits[4] = {255, 190, 120, 50};
 
 static struct s_levels levels[MAX_LEVELS];
 static struct s_config config = { DEF_LEVELS, 0, MODE_NORMAL };
