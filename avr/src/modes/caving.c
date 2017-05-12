@@ -135,10 +135,10 @@ static uint8_t check_voltage(void)
 	static uint8_t reported = 0;
 	uint8_t level = rate_voltage();
 
-	if (level > 3)
+	if (level > 3) {
 		reported = 0;
-	if (level > 2)
 		return 0;
+	}
 
 	level = 3 - level;
 
