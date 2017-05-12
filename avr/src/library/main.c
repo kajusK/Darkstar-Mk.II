@@ -26,6 +26,7 @@
 #include "light.h"
 
 #define WDT_EEPROM_ADDR (E2END-1)
+#define ADC_AVG_SHIFT 3
 
 extern void init(void);
 extern void loop(void);
@@ -68,11 +69,25 @@ static void wdt_err_inc(void)
 }
 
 /*
+ * Average system voltage
+ */
+static void voltage_update(void)
+{
+	static uint16_t total = 0;
+	if (total == 0)
+		total = adc_read_vcc() << ADC_AVG_SHIFT;
+
+	total -= total >> ADC_AVG_SHIFT;
+	total += adc_read_vcc();
+	sys_voltage = total >> ADC_AVG_SHIFT;
+}
+
+/*
  * Run system tasks and user mode loop()
  */
 static void main_loop(void)
 {
-	sys_voltage = adc_read_vcc();
+	voltage_update();
 	sys_temp = adc_core_temp();
 	buttons_read();
 
@@ -112,7 +127,7 @@ void system_loop(void)
 {
 	while (time_diff(latest_run, millis()) < SYS_TICK)
 		;
-	sys_voltage = adc_read_vcc();
+	voltage_update();
 	sys_temp = adc_core_temp();
 
 	buttons_read();
