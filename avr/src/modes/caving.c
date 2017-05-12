@@ -170,6 +170,15 @@ static uint8_t heat_limit(void)
 	return 128 - tmp;
 }
 
+inline static uint8_t level_next(uint8_t level_cur)
+{
+	if (level_cur > 255-LIGHT_STEP)
+		return 0;
+	if (level_cur == 0)
+		return LIGHT_MIN;
+	return level_cur + LIGHT_STEP;
+}
+
 static void mode_programming(void)
 {
 	if (cur_levels == 0) {
@@ -178,24 +187,12 @@ static void mode_programming(void)
 	}
 
 	if (button_state(BUTTON_UP) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_UP) <= HOLD_TIME) {
-		if (levels[cur_levels].flood > 255-LIGHT_STEP)
-			levels[cur_levels].flood = 0;
-		else if (levels[cur_levels].flood == 0)
-			levels[cur_levels].flood = LIGHT_MIN;
-		else
-			levels[cur_levels].flood += LIGHT_STEP;
-	}
+	    button_pressed_time(BUTTON_UP) <= HOLD_TIME)
+		levels[cur_levels].flood = level_next(levels[cur_levels].flood);
 
 	if (button_state(BUTTON_DOWN) == BUTTON_JUST_RELEASED &&
-	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME) {
-		if (levels[cur_levels].spot > 255-LIGHT_STEP)
-			levels[cur_levels].spot = 0;
-		else if (levels[cur_levels].spot == 0)
-			levels[cur_levels].spot = LIGHT_MIN;
-		else
-			levels[cur_levels].spot += LIGHT_STEP;
-	}
+	    button_pressed_time(BUTTON_DOWN) <= HOLD_TIME)
+		levels[cur_levels].spot = level_next(levels[cur_levels].spot);
 
 	if (button_state(BUTTON_DOWN) == BUTTON_PRESSED &&
 	    button_pressed_time(BUTTON_DOWN) >= HOLD_TIME && !hold_done) {
