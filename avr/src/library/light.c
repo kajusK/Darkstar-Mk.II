@@ -133,7 +133,7 @@ static void led_update(enum e_led led, uint8_t level, uint8_t max)
 struct s_limits light_limits(void)
 {
 	static struct s_limits limits = { 0, 0, 0, 0 };
-	uint8_t temp = system_temp();
+	int8_t temp = system_temp();
 	uint16_t voltage = system_voltage();
 
 	if (temp >= TEMP_MAX)
