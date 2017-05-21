@@ -17,7 +17,7 @@ settles at 67 degrees Celsius.
 The measured efficiency is over 90 % for currents over 0,5 A over the whole
 input voltage range and it's topping on 96,9 %.
 
-![Efficiency](./images/efficienty.jpg)
+![Efficiency](./images/efficiency.jpg)
 
 As the buck driver is hystersis driven, the frequency is not stable, but it varies
 with input and output voltage significantly.
