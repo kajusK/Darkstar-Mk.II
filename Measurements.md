@@ -63,6 +63,7 @@ Light
 -----
 The light was measured in integrating sphere at Faculty of Electrical Engineering
 and Communication, Brno University of Technology.
+
 ![Sphere](./images/sphere.jpg)
 
 The measured light spectrum reveals a bit of LED principles. The peak at 450 nm
@@ -74,6 +75,8 @@ It the prototype measured, I used XP-L2, 4000K LEDs, one with CRI > 70, second
 with CRI > 80.
 
 
+| Item				| Value			|
+|-------------------------------|-----------------------|
 | Min luminous flux		| 1,66 lm / 8 mA	|
 | Max luminous flux		| 869 lm / 4 A		|
 | Average max luminous flux	| 785 lm / 4 A		|
