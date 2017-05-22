@@ -36,7 +36,7 @@ bootloader is recommended way to programm the MCU. The attiny841 has no boot
 section, so the optiboot creates virtual boot partition by replacing
 first instruction by jump to itself.
 
-To make programming working, SELFPRGEN fuse needs to be changed, e.g. by command:
+To make self programming working, SELFPRGEN fuse needs to be changed, e.g. by command:
 ```
 avrdude -c usbtiny -p attiny841 -U efuse:w:0xFE:m
 ```
