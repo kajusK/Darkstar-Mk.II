@@ -90,9 +90,9 @@ Title "Darkstar Mk.II"
 Date "2016-12-28"
 Rev "0.2"
 Comp "Jakub Kaderka"
-Comment1 "3-4.2V input"
+Comment1 "3-4.2 V input"
 Comment2 "max 2A/LED"
-Comment3 "110-250kHz Switching frequency"
+Comment3 "250 kHz Switching frequency"
 Comment4 ""
 $EndDescr
 $Comp
@@ -941,7 +941,7 @@ L R R5
 U 1 1 58344886
 P 2950 4450
 F 0 "R5" V 3030 4450 50  0000 C CNN
-F 1 "10k" V 2950 4450 50  0000 C CNN
+F 1 "100k" V 2950 4450 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603" V 2880 4450 50  0001 C CNN
 F 3 "" H 2950 4450 50  0000 C CNN
 	1    2950 4450
