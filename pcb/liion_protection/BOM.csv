@@ -1,0 +1,7 @@
+Reference, Value, Footprint,URL
+Q2,CSD16406Q3,Housings_SON:VSON-8_3.3x3.3mm_Pitch0.65mm_NexFET,http://cz.mouser.com/search/ProductDetail.aspx?R=0virtualkey0virtualkeyCSD16406Q3
+Q1,CSD16406Q3,Housings_SON:VSON-8_3.3x3.3mm_Pitch0.65mm_NexFET,http://cz.mouser.com/search/ProductDetail.aspx?R=0virtualkey0virtualkeyCSD16406Q3
+R2,2k2,Resistors_SMD:R_0603,
+R1,330R,Resistors_SMD:R_0603,
+C1,100n,Capacitors_SMD:C_0603,
+U1,BQ29700DSER,Housings_SON:WSON6_1.5x1.5mm_Pitch0.5mm,http://cz.mouser.com/search/ProductDetail.aspx?R=0virtualkey0virtualkeyBQ29700DSER
