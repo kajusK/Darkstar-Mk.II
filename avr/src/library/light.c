@@ -60,25 +60,20 @@ static uint8_t mode_auto(uint8_t level)
 {
 #ifdef PHOTOTRANS_ADC
 	uint8_t new;
-	//doesn't work with additional pwm modulation - same as sampling freq
+	//doesn't work with additional pwm modulation - close to sampling freq
 	if (level < DEFAULT_DIM_CURRENT)
 		return level;
 
-	//created pid regulator if not created before
+	//create pid regulator if not created before
 	if (pid.kp != PID_KP)
 		pid_init(&pid, PID_KP, PID_KI, PID_KD);
 
 	new = pid_get(&pid, level, system_light());
 	if (new < DEFAULT_DIM_CURRENT)
 		new = DEFAULT_DIM_CURRENT;
-
-	//limit maximum change from level value
-	if (abs((int16_t)new - level) <= PID_RANGE)
-		return new;
-
-	if (new > level)
-		return level + PID_RANGE;
-	return level - PID_RANGE;
+	if (new >= level)
+		return level;
+	return new;
 #else
 	return level;
 #endif
