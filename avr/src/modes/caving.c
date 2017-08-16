@@ -69,8 +69,8 @@ const struct s_levels def_levels[] = {{0, 0, 0, 0}, // off - must be here
 				      {70, 200, 0, 0}, //distance
 				      {255, 255, 0, 0}}; //photo
 
-//limit levels for low voltage/high temp
-const uint8_t limits[4] = {255, 190, 120, 50};
+//limit levels for low voltage (from lowest to full battery)
+const uint8_t limits[5] = {50, 120, 160, 230, 255};
 
 static struct s_levels levels[MAX_LEVELS];
 static struct s_config config = { DEF_LEVELS, 0, MODE_NORMAL };
@@ -133,21 +133,17 @@ static uint8_t rate_voltage(void)
  */
 static uint8_t check_voltage(void)
 {
-	static uint8_t reported = 0;
+	//limit is restarted by changing battery, without this, it would
+	//start blinking - voltage jumps back up when current is reduced
+	static uint8_t reported = 4;
 	uint8_t level = rate_voltage();
 
-	if (level > 3) {
-		reported = 0;
-		return 0;
-	}
-
-	level = 3 - level;
-
-	if (level <= reported)
+	if (level >= reported)
 		return reported;
 
 	reported = level;
-	light_blink(LED_SPOT, 30, 60, reported);
+	if (reported < 4)
+		light_blink(LED_SPOT, 20, 40, 4-reported);
 
 	return reported;
 }
