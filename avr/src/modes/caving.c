@@ -38,10 +38,13 @@ enum e_mode {
 #define BUTTON_DOWN BUTTON2
 
 //time in tenths of ms to be considered as holding
-#define HOLD_TIME 100
+#define HOLD_TIME 50
 
 //time spent in mode=0 to go to sleep
 #define OFF_TIME 200
+
+//inactivity before returning from programming mode
+#define TIMER_MAX 150
 
 //voltage levels to report
 #define VOLTAGE_4	3700
@@ -207,7 +210,7 @@ static void mode_programming(void)
 	    button_state(BUTTON_DOWN) == BUTTON_RELEASED) {
 		hold_done = 0;
 		timer++;
-		if (timer == 0xff) {
+		if (timer > TIMER_MAX) {
 			cur_mode = NORMAL;
 			light_blink(LED_SPOT, 50, 100, 1);
 
@@ -364,10 +367,10 @@ static void mode_normal(void)
 		hold_done = 1;
 		if (cur_levels == 0) {
 			//blink voltage level
-			light_blink(LED_SPOT, 30, 60, rate_voltage()+1);
+			light_blink(LED_SPOT, 20, 40, rate_voltage()+1);
 		} else if (config.prg_locked == 0) {
 			cur_mode = PROGRAMMING;
-			light_blink(LED_SPOT, 50, 100, 1);
+			light_blink(LED_SPOT, 30, 60, 1);
 		}
 	}
 
