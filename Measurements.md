@@ -71,7 +71,7 @@ marks the light of the LED junction, the rest is created by luminophore.
 
 ![Spektral](./images/spektral.jpg)
 
-It the prototype measured, I used XP-L2, 4000K LEDs, one with CRI > 70, second
+In the prototype measured, I used XP-L2, 4000K LEDs, one with CRI > 70, second
 with CRI > 80.
 
 
