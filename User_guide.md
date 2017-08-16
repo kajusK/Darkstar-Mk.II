@@ -40,11 +40,8 @@ While using caving mode firmware, the lamp can be in one of three modes:
 
 In normal mode, short button presses are changing brightness of all LEDs
 based on the programmed levels. Long press of Down button while LEDs are
-on will switch between normal and automated brightness control. The selected
-mode is signalled by blinking - 1 blink is normal mode, 2 blinks is automated.
-
-If Up button is hold, programming mode is entered. It's signalized by 1 slow
-blink.
+on will turn the headlamp off. If Up button is hold, programming mode is entered.
+It's signalized by 1 blink.
 
 If lamp is off and Down button is hold, the lock mode is activated. To disable
 lock mode, just briefly push Up and Down buttons several times. If up button
@@ -59,7 +56,8 @@ charge. Output power can be also limited when body temperature limit is reached.
 ### Programming mode
 
 In this mode, current level selected can be changed for each LED. Up button
-cycles SPOT LED levels, Down is for FLOOD. Holding Down toggles RED LED.
+cycles SPOT LED levels, Down is for FLOOD. Holding Down toggles RED LED, holding
+up toggles WHITE LED.
 
 Programming mode is left automatically after 2,5 seconds of inactivity. Return
 is followed by 1 slow blink.

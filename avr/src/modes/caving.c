@@ -17,6 +17,7 @@ struct s_levels {
 	uint8_t flood;
 	uint8_t spot;
 	uint8_t red;
+	uint8_t white;
 };
 
 struct s_config {
@@ -60,13 +61,13 @@ enum e_mode {
 
 #define DEF_LEVELS 7
 #define MAX_LEVELS 10
-const struct s_levels def_levels[] = {{0, 0, 0}, // off - must be here
-				      {0, 0, 1}, //red only
-				      {LIGHT_MIN, 0, 0}, //low spot
-				      {LIGHT_STEP, LIGHT_STEP, 0}, //small spaces
-				      {100, 50, 0}, //normal walking
-				      {70, 200, 0}, //distance
-				      {200, 200, 0}}; //photo
+const struct s_levels def_levels[] = {{0, 0, 0, 0}, // off - must be here
+				      {0, 0, 1, 0}, //red only
+				      {LIGHT_MIN, 0, 0, 0}, //low spot
+				      {LIGHT_STEP, LIGHT_STEP, 0, 0}, //small spaces
+				      {100, 50, 0, 0}, //normal walking
+				      {70, 200, 0, 0}, //distance
+				      {255, 255, 0, 0}}; //photo
 
 //limit levels for low voltage/high temp
 const uint8_t limits[4] = {255, 190, 120, 50};
@@ -89,7 +90,7 @@ static void config_load(void)
 
 	//if mode is completely empty (e.g. corrupted memory), turn flood on
 	for (i = 1; i < config.num_levels; i++) {
-		if (levels[i].red == 0 && levels[i].flood == 0 && levels[i].spot == 0)
+		if (levels[i].white == 0 && levels[i].red == 0 && levels[i].flood == 0 && levels[i].spot == 0)
 			levels[i].flood = LIGHT_MIN;
 	}
 }
@@ -200,6 +201,11 @@ static void mode_programming(void)
 		hold_done = 1;
 		levels[cur_levels].red = levels[cur_levels].red == 1 ? 0 : 1;
 	}
+	if (button_state(BUTTON_UP) == BUTTON_PRESSED &&
+	    button_pressed_time(BUTTON_UP) >= HOLD_TIME && !hold_done) {
+		hold_done = 1;
+		levels[cur_levels].white = levels[cur_levels].white == 1 ? 0 : 1;
+	}
 
 	if (button_state(BUTTON_UP) == BUTTON_RELEASED &&
 	    button_state(BUTTON_DOWN) == BUTTON_RELEASED) {
@@ -211,6 +217,7 @@ static void mode_programming(void)
 
 			//if nothing is set, turn on flood
 			if (levels[cur_levels].red == 0 &&
+			    levels[cur_levels].white == 0 &&
 			    levels[cur_levels].flood == 0 &&
 			    levels[cur_levels].spot == 0)
 				levels[cur_levels].flood = LIGHT_MIN;
@@ -226,6 +233,7 @@ static void mode_programming(void)
 		light_set(LED_FLOOD, levels[cur_levels].flood, MODE_NORMAL);
 		light_set(LED_SPOT, levels[cur_levels].spot, MODE_NORMAL);
 		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
+		light_set(LED_WHITE, levels[cur_levels].white, MODE_NORMAL);
 	}
 }
 
@@ -288,7 +296,7 @@ static void mode_config(void)
 
 	if (changed == 1 && timer == 0xff) {
 		for (i = 1; i < config.num_levels; i++) {
-			if (levels[i].red == 0 && levels[i].spot == 0 && levels[i].flood == 0) {
+			if (levels[i].white == 0 && levels[i].red == 0 && levels[i].spot == 0 && levels[i].flood == 0) {
 				levels[i].spot = 50;
 				levels[i].red = i % 2;
 			}
@@ -349,15 +357,9 @@ static void mode_normal(void)
 		if (cur_levels == 0) {
 			cur_mode = LOCKED;
 			light_blink(LED_SPOT, 30, 60, 3);
-		//switch led control modes
-		} else if (config.light_control == MODE_NORMAL) {
-			light_blink(LED_SPOT, 50, 100, 2);
-			config.light_control = MODE_AUTO;
-			config_save();
+		//turn lamp off
 		} else {
-			light_blink(LED_SPOT, 50, 100, 1);
-			config.light_control = MODE_NORMAL;
-			config_save();
+			cur_levels = 0;
 		}
 	}
 
@@ -379,9 +381,10 @@ static void mode_normal(void)
 
 	//apply changes from above
 	if (light_get_blink_finished()) {
-		light_set(LED_FLOOD, levels[cur_levels].flood, config.light_control);
-		light_set(LED_SPOT, levels[cur_levels].spot, config.light_control);
+		light_set(LED_FLOOD, levels[cur_levels].flood, MODE_NORMAL);
+		light_set(LED_SPOT, levels[cur_levels].spot, MODE_NORMAL);
 		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
+		light_set(LED_WHITE, levels[cur_levels].white, MODE_NORMAL);
 
 		if (cur_levels != 0) {
 			uint8_t min = limits[check_voltage()];
