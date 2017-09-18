@@ -27,6 +27,7 @@ LDFLAGS=-mmcu=$(MCU) -Wl,--gc-sections
 OBJCOPY=avr-objcopy
 UPLOADER=avrdude
 UPLOADER_FLAGS=-c arduino -b 9600 -P /dev/ttyUSB0 -p $(MCU)
+FUSES_FLAGS=-c usbtiny -p $(MCU)
 
 #resulting bin
 TARGET=$(PROGRAM).hex
@@ -73,4 +74,4 @@ program:
 
 #SELFPRGEN enable
 fuses:
-	$(UPLOADER) $(UPLOADER_FLAGS) -U efuse:w:0xFE:m
+	$(UPLOADER) $(FUSES_FLAGS) -U efuse:w:0xFE:m
