@@ -105,14 +105,14 @@ static void led_update(enum e_led led, uint8_t level, uint8_t max)
 	case LED_FLOOD:
 		led2_set(level, dimming_enable);
 		break;
-	case LED_RED:
+	case LED_WHITE:
 		if (level) {
 			led_sm1_on();
 		} else {
 			led_sm1_off();
 		}
 		break;
-	case LED_WHITE:
+	case LED_RED:
 		if (level) {
 			led_sm2_on();
 		} else {
