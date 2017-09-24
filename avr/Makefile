@@ -26,7 +26,8 @@ CFLAGS=-Wall -Wextra -std=c99 -Os -I $(SRCDIRS) -DF_CPU=$(F_CPU) -mmcu=$(MCU) -s
 LDFLAGS=-mmcu=$(MCU) -Wl,--gc-sections
 OBJCOPY=avr-objcopy
 UPLOADER=avrdude
-UPLOADER_FLAGS=-c arduino -b 9600 -P /dev/ttyUSB0 -p $(MCU)
+#UPLOADER_FLAGS=-c arduino -b 9600 -P /dev/ttyUSB0 -p $(MCU)
+UPLOADER_FLAGS=-c usbtiny -p $(MCU) -B 3
 FUSES_FLAGS=-c usbtiny -p $(MCU)
 
 #resulting bin
