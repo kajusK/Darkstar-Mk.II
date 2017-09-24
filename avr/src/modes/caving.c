@@ -21,6 +21,7 @@ struct s_levels {
 };
 
 struct s_config {
+	uint16_t magic;
 	uint8_t num_levels;
 	uint8_t prg_locked : 1;
 	uint8_t light_control : 2;
@@ -64,6 +65,10 @@ enum e_mode {
 
 #define DEF_LEVELS 7
 #define MAX_LEVELS 10
+
+// magic value to determine if config is already in eeprom
+#define MAGIC 0xBEEF
+
 const struct s_levels def_levels[] = {{0, 0, 0, 0}, // off - must be here
 				      {0, 0, 1, 0}, //red only
 				      {LIGHT_MIN, 0, 0, 0}, //low spot
@@ -76,7 +81,7 @@ const struct s_levels def_levels[] = {{0, 0, 0, 0}, // off - must be here
 const uint8_t limits[5] = {50, 120, 160, 230, 255};
 
 static struct s_levels levels[MAX_LEVELS];
-static struct s_config config = { DEF_LEVELS, 0, MODE_NORMAL };
+static struct s_config config = { MAGIC, DEF_LEVELS, 0, MODE_NORMAL };
 
 static uint8_t cur_levels;
 static enum e_mode cur_mode;
@@ -412,10 +417,10 @@ static void mode_normal(void)
  */
 void init(void)
 {
-	uint8_t c;
+	uint16_t magic;
 
-	config_read(0, &c, 1);
-	if (c == 0 || c > 10)
+	config_read(0, (uint8_t *)&magic, 2);
+	if (magic != MAGIC)
 		config_default();
 	else
 		config_load();
