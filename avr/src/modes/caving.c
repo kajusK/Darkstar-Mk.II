@@ -384,7 +384,7 @@ static void mode_normal(void)
 		hold_done = 0;
 
 	//apply changes from above
-	if (light_get_blink_finished() || cur_levels == 0) {
+	if (light_get_blink_finished()) {
 		light_set(LED_FLOOD, levels[cur_levels].flood, MODE_NORMAL);
 		light_set(LED_SPOT, levels[cur_levels].spot, MODE_NORMAL);
 		light_set(LED_RED, levels[cur_levels].red, MODE_NORMAL);
