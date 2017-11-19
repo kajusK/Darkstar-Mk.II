@@ -10,10 +10,10 @@ mine explorer, biker, etc. with hacker soul, this is a way to go!
 Features
 --------
 * Two high power high efficiency XP-L2 LEDs and two low power (e.g. red + UV).
-* Up to 869 ANSI lumens.
+* Up to 869 ANSI lumens (with 80 CRI 4000 K LEDs).
 * Anodized aluminium alloy body.
 * 3D printed battery box.
-* Waterproof up to TODO meters (IPx8).
+* Waterproof up to 2 (tested) meters (IPx8).
 * Custom high efficiency LED drivers - up to 96 %.
 * Up to 2 Amps per LED.
 * Runs on single Li-Ion cell, two are recommended for higher run times.
@@ -31,9 +31,10 @@ Features
 
 Weight
 ------
-* Lamp: TODO
-* Battery box: TODO
+* Lamp: 92 g
+* Battery box: 50 g
 * 2x18650 battery pack: 97 g
+* Head strap: 38 g
 
 HowTo
 =====
