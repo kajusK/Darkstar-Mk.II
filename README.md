@@ -14,6 +14,8 @@ Features
 * Anodized aluminium alloy body.
 * 3D printed battery box.
 * Waterproof up to 2 (tested) meters (IPx8).
+* 2 meter drop resistance tested
+* Works in wide temperature range - minus 20 °C to plus 60 °C
 * Custom high efficiency LED drivers - up to 96 %.
 * Up to 2 Amps per LED.
 * Runs on single Li-Ion cell, two are recommended for higher run times.

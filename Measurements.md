@@ -82,3 +82,22 @@ with CRI > 80.
 | Average max luminous flux	| 785 lm / 4 A		|
 | Colour temperature		| 3937 K		|
 | CRI				| 85,7			|
+
+
+Temperature cycling
+-------------------
+To test the temperature range the lamp can work in, I put the lamp into the
+freezer (-18 °C) for 30 minutes, checked everything works and then moved it into the oven
+set to 60 degrees Celsius for 30 minutes and check if it works again.
+
+This was repeated several times. The battery box got a bit soft in the oven.
+The cable between the box and the lamp body was pretty hard after taking it out of the
+freezer. But these changes were just temporary and everything else worked well.
+
+Impact resistance
+-----------------
+The light was dropped from height 2 meters 6 times in different orientations on
+a concrete floor. In the first set of tests, the optical part of the LED
+was cut away by the lens, therefore I glued the lens into place and repeated
+the test with a new LED. This time, nothing was damaged, only few scratches appeared
+on the lamp surface.
