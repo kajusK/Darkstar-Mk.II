@@ -18,5 +18,6 @@ and [li-ion protection BOM](../pcb/liion_protection/BOM.csv).
 | Set screw M3x4			| 2	|
 | O-ring 36x1,5				| 1	|
 | O-ring 35x1,5				| 1	|
+| O-ring 2x1,5				| 1	|
 | Some ABS to print battery box		| 1	|
 | 17mm condenser lens 10 deg for XP-L2	| 1	|
