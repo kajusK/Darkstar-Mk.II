@@ -70,12 +70,4 @@ extern void config_read(uint16_t addr, uint8_t *buf, uint8_t count);
  */
 uint16_t millis(void);
 
-/*
- * Get difference between two times in ms with single overflow in mind,
- * the difference must be shorter than 2^16 ms ~ 65 s
- *
- * t2 timestamp has to be taken after t1
- */
-extern uint16_t time_diff(uint16_t t1, uint16_t t2);
-
 #endif

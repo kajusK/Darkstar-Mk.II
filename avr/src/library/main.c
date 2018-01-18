@@ -125,7 +125,7 @@ uint16_t system_voltage(void)
  */
 void system_loop(void)
 {
-	while (time_diff(latest_run, millis()) < SYS_TICK)
+	while ((millis() - latest_run) < SYS_TICK)
 		;
 	voltage_update();
 	sys_temp = adc_core_temp();
@@ -187,7 +187,7 @@ int main(void)
 	while (1) {
 		main_loop();
 		latest_run = millis();
-		while (time_diff(latest_run, millis()) < SYS_TICK)
+		while ((millis() - latest_run) < SYS_TICK)
 			;
 	}
 

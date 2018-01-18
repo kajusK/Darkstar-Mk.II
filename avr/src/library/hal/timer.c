@@ -50,17 +50,3 @@ uint16_t millis(void)
 
 	return int_time;
 }
-
-/*
- * Get difference between two times in ms with single overflow in mind,
- * the difference must be shorter than 2^16 ms ~ 65 s
- *
- * t2 timestamp has to be taken after t1
- */
-uint16_t time_diff(uint16_t t1, uint16_t t2)
-{
-	if (t1 < t2)
-		return t2 - t1;
-
-	return (65536 - t1) + t2;
-}
