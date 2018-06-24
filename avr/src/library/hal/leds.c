@@ -119,23 +119,23 @@ void leds_dim_level(uint8_t level)
  */
 void led1_set(uint8_t brightness, uint8_t dimming_enable)
 {
-	//turn on output if required
-	if (brightness == 0)
-		DDR(LED1_PWM_PORT) &= ~_BV(LED1_PWM_PIN);
-	else
-		DDR(LED1_PWM_PORT) |= _BV(LED1_PWM_PIN);
 
 	if (!dimming_enable) {
 		led1_duty(brightness);
 		led1_dim_disable();
 		if (brightness == 0)
 			DDR(LED1_DIM_PORT) |= _BV(LED1_DIM_PIN);
-		return;
+	} else {
+		pwm_t1_setA(brightness << 1);
+		led1_dim_enable();
+		led1_duty(dim_level);
 	}
 
-	led1_duty(dim_level);
-	pwm_t1_setA(brightness << 1);
-	led1_dim_enable();
+	//turn on output if required
+	if (brightness == 0)
+		DDR(LED1_PWM_PORT) &= ~_BV(LED1_PWM_PIN);
+	else
+		DDR(LED1_PWM_PORT) |= _BV(LED1_PWM_PIN);
 }
 
 /*
@@ -147,21 +147,21 @@ void led1_set(uint8_t brightness, uint8_t dimming_enable)
  */
 void led2_set(uint8_t brightness, uint8_t dimming_enable)
 {
-	//turn on output if required
-	if (brightness == 0)
-		DDR(LED2_PWM_PORT) &= ~_BV(LED2_PWM_PIN);
-	else
-		DDR(LED2_PWM_PORT) |= _BV(LED2_PWM_PIN);
 
 	if (!dimming_enable) {
 		led2_duty(brightness);
 		led2_dim_disable();
 		if (brightness == 0)
 			DDR(LED2_DIM_PORT) |= _BV(LED2_DIM_PIN);
-		return;
+	} else {
+		pwm_t1_setB(brightness << 1);
+		led2_dim_enable();
+		led2_duty(dim_level);
 	}
 
-	led2_duty(dim_level);
-	pwm_t1_setB(brightness << 1);
-	led2_dim_enable();
+	//turn on output if required
+	if (brightness == 0)
+		DDR(LED2_PWM_PORT) &= ~_BV(LED2_PWM_PIN);
+	else
+		DDR(LED2_PWM_PORT) |= _BV(LED2_PWM_PIN);
 }
